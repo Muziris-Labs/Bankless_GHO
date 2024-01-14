@@ -3,9 +3,10 @@ pragma solidity >=0.8.0 <0.9.0;
 
 import "../verifier/PasskeyVerifier.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
+import "../util/Conversion.sol";
 
 contract PasskeyManager {
-    UltraVerifier public verifier;
+    UltraVerifier public passkeyVerifier;
 
     bytes private inputs;
 
@@ -14,9 +15,9 @@ contract PasskeyManager {
     error InvalidAuthenticatorData();
     error InvalidClientData();
 
-    constructor(address _verifier, bytes memory _inputs) {
-        verifier = UltraVerifier(_verifier);
-        inputs = _inputs;
+    constructor(address _passkeyVerifier, bytes memory _passkeyInputs) {
+        passkeyVerifier = UltraVerifier(_passkeyVerifier);
+        inputs = _passkeyInputs;
     }
 
     function getPasskeyNonce() public view returns (string memory) {
@@ -33,6 +34,14 @@ contract PasskeyManager {
         return credentialId;
     }
 
+    function changePasskeyVerifier(address _passkeyVerifier) internal {
+        passkeyVerifier = UltraVerifier(_passkeyVerifier);
+    }
+
+    function changePasskeyInputs(bytes memory _passkeyInputs) internal {
+        inputs = _passkeyInputs;
+    }
+
     function verifyPasskey(bytes calldata proof, bytes32[] memory _inputs) public view returns (bool) {
         bytes32[32] memory messageInput;
         bytes32[32] memory pubkeyHashInput;
@@ -45,8 +54,8 @@ contract PasskeyManager {
             pubkeyHashInput[i] = inputs[i + 32];
         }
 
-        bytes32 expectedMessage = convertBytes32ArrayToBytes32(messageInput);
-        bytes32 expectedPubkeyHash = convertBytes32ArrayToBytes32(pubkeyHashInput);
+        bytes32 expectedMessage = Conversion.convertBytes32ArrayToBytes32(messageInput);
+        bytes32 expectedPubkeyHash = Conversion.convertBytes32ArrayToBytes32(pubkeyHashInput);
 
         bytes32 message = getMessage();
         (
@@ -56,53 +65,13 @@ contract PasskeyManager {
         require(message == expectedMessage, "Invalid message");
         require(pubkeyHash == expectedPubkeyHash, "Invalid pubkeyHash");
 
-        return verifier.verify(proof, _inputs);
+        return passkeyVerifier.verify(proof, _inputs);
     }
 
     function usePasskey(bytes calldata proof, bytes32[] memory _inputs) internal returns (bool) {
-        bytes32[32] memory messageInput;
-        bytes32[32] memory pubkeyHashInput;
-
-        for (uint256 i = 0; i < 32; i++) {
-            messageInput[i] = inputs[i];
-        }
-
-        for (uint256 i = 0; i < 32; i++) {
-            pubkeyHashInput[i] = inputs[i + 32];
-        }
-
-        bytes32 expectedMessage = convertBytes32ArrayToBytes32(messageInput);
-        bytes32 expectedPubkeyHash = convertBytes32ArrayToBytes32(pubkeyHashInput);
-
-        bytes32 message = useMessage();
-        (
-            bytes32 pubkeyHash,,,,,
-        ) = decodeEncodedInputs(inputs);
-
-        require(message == expectedMessage, "Invalid message");
-        require(pubkeyHash == expectedPubkeyHash, "Invalid pubkeyHash");
-
-        return verifier.verify(proof, _inputs);
-    }
-
-    function useMessage() internal returns (bytes32) {
-         (
-            ,
-            ,
-            bytes memory authenticatorData,
-            bytes1 authenticatorDataFlagMask,
-            bytes memory clientData,
-            uint clientChallengeDataOffset
-        ) = decodeEncodedInputs(inputs);
-
-        return
-            computeMessage(
-                authenticatorData,
-                authenticatorDataFlagMask,
-                clientData,
-                _usePasskeyNonce(),
-                clientChallengeDataOffset
-            );
+        require(verifyPasskey(proof, _inputs), "Invalid passkey");
+        _usePasskeyNonce();
+        return true;
     }
 
     function getMessage() public view returns (bytes32) {
@@ -225,25 +194,5 @@ contract PasskeyManager {
             j += 32;
         }
         return _to;
-    }
-
-    function convertBytes32ArrayToBytes32(bytes32[32] memory value) public pure returns (bytes32) {
-        uint[32] memory output;
-
-        for(uint256 i = 0; i < 32; i++){
-            output[i] = uint(value[i]);
-        }
-
-        return convertUintArrayToBytes32(output);
-    }
-
-    function convertUintArrayToBytes32(uint[32] memory byteArray) internal pure returns (bytes32) {
-        bytes32 result;
-
-        for (uint256 i = 0; i < 32; i++) {
-            result |= bytes32(byteArray[i]) << ((31 - i) * 8);
-        }
-
-        return result;
     }
 }

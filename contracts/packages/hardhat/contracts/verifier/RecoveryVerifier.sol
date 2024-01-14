@@ -3,7 +3,7 @@
 // Copyright 2022 Aztec
 pragma solidity >=0.8.4;
 
-library UltraVerificationKey {
+library RecoveryUltraVerificationKey {
     function verificationKeyHash() internal pure returns(bytes32) {
         return 0x61ae6655f2e50138265be765837827073a92778ab97975e7b5a750c4ab5f92f5;
     }
@@ -74,7 +74,7 @@ library UltraVerificationKey {
  * @title Ultra Plonk proof verification contract
  * @dev Top level Plonk proof verification contract, which allows Plonk proof to be verified
  */
-abstract contract BaseUltraVerifier {
+abstract contract RecoveryBaseUltraVerifier {
     // VERIFICATION KEY MEMORY LOCATIONS
     uint256 internal constant N_LOC = 0x380;
     uint256 internal constant NUM_INPUTS_LOC = 0x3a0;
@@ -2636,12 +2636,12 @@ abstract contract BaseUltraVerifier {
     }
 }
 
-contract UltraVerifier is BaseUltraVerifier {
-    function getVerificationKeyHash() public pure override(BaseUltraVerifier) returns (bytes32) {
-        return UltraVerificationKey.verificationKeyHash();
+contract RecoveryUltraVerifier is RecoveryBaseUltraVerifier {
+    function getVerificationKeyHash() public pure override(RecoveryBaseUltraVerifier) returns (bytes32) {
+        return RecoveryUltraVerificationKey.verificationKeyHash();
     }
 
-    function loadVerificationKey(uint256 vk, uint256 _omegaInverseLoc) internal pure virtual override(BaseUltraVerifier) {
-        UltraVerificationKey.loadVerificationKey(vk, _omegaInverseLoc);
+    function loadVerificationKey(uint256 vk, uint256 _omegaInverseLoc) internal pure virtual override(RecoveryBaseUltraVerifier) {
+        RecoveryUltraVerificationKey.loadVerificationKey(vk, _omegaInverseLoc);
     }
 }
