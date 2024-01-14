@@ -7,17 +7,22 @@ import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
 import "./base/PasskeyManager.sol";
 import "./base/RecoveryManager.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 
 contract Valerium is TokenCallbackHandler, Initializable, PasskeyManager, RecoveryManager {
     address public VALERIUM_FORWARDER;
     address public VALERIUM_GAS_TANK;
     address public GHO_TOKEN;
+    address public GHO_AGGREGATOR;
+    address public ETH_AGGREGATOR;
 
-    constructor(address _forwarder, address _gasTank, address _ghoToken) {
+    constructor(address _forwarder, address _gasTank, address _ghoToken, address _ghoAggregator, address _ethAggregator) {
         VALERIUM_FORWARDER = _forwarder;
         VALERIUM_GAS_TANK = _gasTank;
         GHO_TOKEN = _ghoToken;
+        GHO_AGGREGATOR = _ghoAggregator;
+        ETH_AGGREGATOR = _ethAggregator;
     }
 
     modifier onlyValeriumForwarder() {
@@ -74,6 +79,70 @@ contract Valerium is TokenCallbackHandler, Initializable, PasskeyManager, Recove
         uint256 fees = (gasUsed * tx.gasprice) + baseFees;
 
         payable(VALERIUM_GAS_TANK).transfer(fees);
+        return true;
+    }
+
+    function executeRecoveryNative(bytes calldata proof, bytes32[] memory _inputs, bytes memory _passkeyInputs, uint256 baseFees, uint256 expectedFees) public payable onlyValeriumForwarder returns (bool) {
+        require(address(this).balance >= expectedFees, "Not enough fees");
+        
+        uint256 gas = gasleft();
+        executeRecovery(proof, _inputs, _passkeyInputs);
+        uint256 gasUsed = gas - gasleft();
+        uint256 fees = (gasUsed * tx.gasprice) + baseFees;
+
+        payable(VALERIUM_GAS_TANK).transfer(fees);
+        return true;
+    }
+
+    function getGHOAmount(int256 fees) public view returns (int256) {
+        AggregatorV3Interface ethAggregator = AggregatorV3Interface(ETH_AGGREGATOR);
+        AggregatorV3Interface ghoAggregator = AggregatorV3Interface(GHO_AGGREGATOR);
+
+        (, int256 ethPrice, , , ) = ethAggregator.latestRoundData();
+        (, int256 ghoPrice, , , ) = ghoAggregator.latestRoundData();
+
+        int256 ratio = ethPrice / ghoPrice;
+
+        int256 feeRatio = (fees * ratio) / 10 ** 10;
+        return feeRatio;
+    }
+
+    function executePayGHO(bytes calldata proof, bytes32[] memory _inputs, address dest, uint256 value, bytes calldata func, uint256 baseFees, uint256 expectedFees) public payable onlyValeriumForwarder returns (bool) {
+        require(IERC20(GHO_TOKEN).balanceOf(address(this)) >= expectedFees, "Not enough fees");
+        
+        uint256 gas = gasleft();
+        execute(proof, _inputs, dest, value, func);
+        uint256 gasUsed = gas - gasleft();
+        uint256 fees = (gasUsed * tx.gasprice) + baseFees;
+
+        uint256 ghoAmount = uint(getGHOAmount(int(fees)));
+        IERC20(GHO_TOKEN).transfer(VALERIUM_GAS_TANK, ghoAmount);
+        return true;
+    }
+
+    function executeBatchPayGHO(bytes calldata proof, bytes32[] memory _inputs, address[] calldata dest, uint256[] calldata value, bytes[] calldata func, uint256 baseFees, uint256 expectedFees) public payable onlyValeriumForwarder returns (bool) {
+        require(IERC20(GHO_TOKEN).balanceOf(address(this)) >= expectedFees, "Not enough fees");
+        
+        uint256 gas = gasleft();
+        executeBatch(proof, _inputs, dest, value, func);
+        uint256 gasUsed = gas - gasleft();
+        uint256 fees = (gasUsed * tx.gasprice) + baseFees;
+
+        uint256 ghoAmount = uint(getGHOAmount(int(fees)));
+        IERC20(GHO_TOKEN).transfer(VALERIUM_GAS_TANK, ghoAmount);
+        return true;
+    }
+
+    function executeRecoveryPayGHO(bytes calldata proof, bytes32[] memory _inputs, bytes memory _passkeyInputs, uint256 baseFees, uint256 expectedFees) public payable onlyValeriumForwarder returns (bool) {
+        require(IERC20(GHO_TOKEN).balanceOf(address(this)) >= expectedFees, "Not enough fees");
+        
+        uint256 gas = gasleft();
+        executeRecovery(proof, _inputs, _passkeyInputs);
+        uint256 gasUsed = gas - gasleft();
+        uint256 fees = (gasUsed * tx.gasprice) + baseFees;
+
+        uint256 ghoAmount = uint(getGHOAmount(int(fees)));
+        IERC20(GHO_TOKEN).transfer(VALERIUM_GAS_TANK, ghoAmount);
         return true;
     }
 
