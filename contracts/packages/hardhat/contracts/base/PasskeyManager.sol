@@ -15,7 +15,7 @@ contract PasskeyManager {
     error InvalidAuthenticatorData();
     error InvalidClientData();
 
-    constructor(address _passkeyVerifier, bytes memory _passkeyInputs) {
+    function _initializePasskeyManager(address _passkeyVerifier, bytes memory _passkeyInputs) internal {
         passkeyVerifier = UltraVerifier(_passkeyVerifier);
         inputs = _passkeyInputs;
     }

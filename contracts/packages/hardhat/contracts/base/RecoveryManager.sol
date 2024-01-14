@@ -11,7 +11,7 @@ contract RecoveryManager {
 
     uint256 private recoveryNonce;
 
-    constructor(address _recoveryVerifier, bytes32 _recoveryKeyHash) {
+    function _initializeRecoveryManager(address _recoveryVerifier, bytes32 _recoveryKeyHash) internal {
         recoveryVerifier = RecoveryUltraVerifier(_recoveryVerifier);
         recoveryKeyHash = _recoveryKeyHash;
     }
