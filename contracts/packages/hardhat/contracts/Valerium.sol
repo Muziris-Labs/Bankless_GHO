@@ -27,7 +27,12 @@ contract Valerium is TokenCallbackHandler, Initializable, PasskeyManager, Recove
     }
 
     modifier onlyValeriumForwarder() {
-        require(msg.sender == VALERIUM_FORWARDER, "Only Valerium can call this function");
+        require(msg.sender == VALERIUM_FORWARDER, "Only Valerium Forwarder can call this function");
+        _;
+    }
+
+    modifier notValeriumForwarder() {
+        require(msg.sender != VALERIUM_FORWARDER, "Valerium Forwarder cannot call this function");
         _;
     }
 
@@ -41,19 +46,19 @@ contract Valerium is TokenCallbackHandler, Initializable, PasskeyManager, Recove
         _initializeRecoveryManager(_recoveryVerifier, _recoveryKeyHash);
     }
 
-    function execute(bytes calldata proof, bytes32[] memory _inputs, address dest, uint256 value, bytes calldata func) public payable returns (bool) {
+    function execute(bytes calldata proof, bytes32[] memory _inputs, address dest, uint256 value, bytes calldata func) public payable notValeriumForwarder returns (bool) {
         require(usePasskey(proof, _inputs), "Invalid passkey");
         _execute(dest, value, func);
         return true;
     }
 
-    function executeBatch(bytes calldata proof, bytes32[] memory _inputs, address[] calldata dest, uint256[] calldata value, bytes[] calldata func) public payable returns (bool) {
+    function executeBatch(bytes calldata proof, bytes32[] memory _inputs, address[] calldata dest, uint256[] calldata value, bytes[] calldata func) public payable notValeriumForwarder returns (bool) {
         require(usePasskey(proof, _inputs), "Invalid passkey");
         _executeBatch(dest, value, func);
         return true;
     }
 
-    function executeRecovery(bytes calldata proof, bytes32[] memory _inputs, bytes memory _passkeyInputs) public payable returns (bool) {
+    function executeRecovery(bytes calldata proof, bytes32[] memory _inputs, bytes memory _passkeyInputs) public payable notValeriumForwarder returns (bool) {
         require(useRecovery(proof, _inputs), "Invalid recovery");
         changePasskeyInputs(_passkeyInputs);
         return true;
@@ -108,7 +113,7 @@ contract Valerium is TokenCallbackHandler, Initializable, PasskeyManager, Recove
 
         int256 ratio = ethPrice / ghoPrice;
 
-        int256 feeRatio = (fees * ratio) / 10 ** 10;
+        int256 feeRatio = fees * ratio;
         return feeRatio;
     }
 
