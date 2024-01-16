@@ -8,16 +8,17 @@ import "./base/PasskeyManager.sol";
 import "./base/RecoveryManager.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
+import "@openzeppelin/contracts/metatx/ERC2771Context.sol";
 
 
-contract Valerium is TokenCallbackHandler, Initializable, PasskeyManager, RecoveryManager {
+contract Valerium is TokenCallbackHandler, Initializable, PasskeyManager, RecoveryManager, ERC2771Context {
     address public VALERIUM_FORWARDER;
     address public VALERIUM_GAS_TANK;
     address public GHO_TOKEN;
     address public GHO_AGGREGATOR;
     address public ETH_AGGREGATOR;
 
-    constructor(address _forwarder, address _gasTank, address _ghoToken, address _ghoAggregator, address _ethAggregator) {
+    constructor(address _forwarder, address _gasTank, address _ghoToken, address _ghoAggregator, address _ethAggregator) ERC2771Context(_forwarder) {
         VALERIUM_FORWARDER = _forwarder;
         VALERIUM_GAS_TANK = _gasTank;
         GHO_TOKEN = _ghoToken;
@@ -59,7 +60,7 @@ contract Valerium is TokenCallbackHandler, Initializable, PasskeyManager, Recove
     }
 
     function executeNative(bytes calldata proof, bytes32[] memory _inputs, address dest, uint256 value, bytes calldata func, uint256 baseFees, uint256 expectedFees) public payable onlyValeriumForwarder returns (bool) {
-        require(address(this).balance >= expectedFees, "Not enough fees");
+        require(address(this).balance >= expectedFees + value, "Not enough fees");
         
         uint256 gas = gasleft();
         execute(proof, _inputs, dest, value, func);
@@ -71,7 +72,11 @@ contract Valerium is TokenCallbackHandler, Initializable, PasskeyManager, Recove
     }
 
     function executeBatchNative(bytes calldata proof, bytes32[] memory _inputs, address[] calldata dest, uint256[] calldata value, bytes[] calldata func, uint256 baseFees, uint256 expectedFees) public payable onlyValeriumForwarder returns (bool) {
-        require(address(this).balance >= expectedFees, "Not enough fees");
+        uint256 totalValue = 0;
+        for (uint256 i = 0; i < value.length; i++) {
+            totalValue += value[i];
+        }
+        require(address(this).balance >= expectedFees + totalValue, "Not enough fees");
         
         uint256 gas = gasleft();
         executeBatch(proof, _inputs, dest, value, func);
@@ -108,7 +113,7 @@ contract Valerium is TokenCallbackHandler, Initializable, PasskeyManager, Recove
     }
 
     function executePayGHO(bytes calldata proof, bytes32[] memory _inputs, address dest, uint256 value, bytes calldata func, uint256 baseFees, uint256 expectedFees) public payable onlyValeriumForwarder returns (bool) {
-        require(IERC20(GHO_TOKEN).balanceOf(address(this)) >= expectedFees, "Not enough fees");
+        require(IERC20(GHO_TOKEN).balanceOf(address(this)) >= uint(getGHOAmount(int(expectedFees))), "Not enough fees");
         
         uint256 gas = gasleft();
         execute(proof, _inputs, dest, value, func);
@@ -121,7 +126,7 @@ contract Valerium is TokenCallbackHandler, Initializable, PasskeyManager, Recove
     }
 
     function executeBatchPayGHO(bytes calldata proof, bytes32[] memory _inputs, address[] calldata dest, uint256[] calldata value, bytes[] calldata func, uint256 baseFees, uint256 expectedFees) public payable onlyValeriumForwarder returns (bool) {
-        require(IERC20(GHO_TOKEN).balanceOf(address(this)) >= expectedFees, "Not enough fees");
+        require(IERC20(GHO_TOKEN).balanceOf(address(this)) >= uint(getGHOAmount(int(expectedFees))), "Not enough fees");
         
         uint256 gas = gasleft();
         executeBatch(proof, _inputs, dest, value, func);
@@ -134,7 +139,7 @@ contract Valerium is TokenCallbackHandler, Initializable, PasskeyManager, Recove
     }
 
     function executeRecoveryPayGHO(bytes calldata proof, bytes32[] memory _inputs, bytes memory _passkeyInputs, uint256 baseFees, uint256 expectedFees) public payable onlyValeriumForwarder returns (bool) {
-        require(IERC20(GHO_TOKEN).balanceOf(address(this)) >= expectedFees, "Not enough fees");
+        require(IERC20(GHO_TOKEN).balanceOf(address(this)) >= uint(getGHOAmount(int(expectedFees))), "Not enough fees");
         
         uint256 gas = gasleft();
         executeRecovery(proof, _inputs, _passkeyInputs);
