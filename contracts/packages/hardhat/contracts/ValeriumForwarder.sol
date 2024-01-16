@@ -242,11 +242,15 @@ contract ValeriumForwarder is EIP712, Nonces {
 
             uint256 reqGas = request.gas;
             address to = request.to;
+            bytes memory transactionData = request.data;
             bytes memory data = abi.encodePacked(request.data, request.from);
 
             uint256 gasLeft;
 
-            bytes4 functionSelector = bytes4(request.data);
+            bytes4 functionSelector;
+            assembly {
+                functionSelector := mload(add(transactionData, 32))
+            }
 
             if(request.to == address(valeriumFactory)){
                 assembly {

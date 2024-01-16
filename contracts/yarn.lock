@@ -223,6 +223,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@chainlink/contracts-ccip@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@chainlink/contracts-ccip@npm:1.2.1"
+  dependencies:
+    "@eth-optimism/contracts": ^0.5.21
+    "@openzeppelin/contracts": ~4.3.3
+    "@openzeppelin/contracts-upgradeable-4.7.3": "npm:@openzeppelin/contracts-upgradeable@v4.7.3"
+    "@openzeppelin/contracts-v0.7": "npm:@openzeppelin/contracts@v3.4.2"
+  checksum: b789c01eeaf0b28c712f9fbc9e42dc60e412f02274074a637fda4919cbf54eacc117036880a4b7a4921835d1a53bbe0b2dd9d9253d98fba167a212faba6899f1
+  languageName: node
+  linkType: hard
+
 "@chainlink/contracts@npm:^0.8.0":
   version: 0.8.0
   resolution: "@chainlink/contracts@npm:0.8.0"
@@ -2007,6 +2019,7 @@ __metadata:
   resolution: "@se-2/hardhat@workspace:packages/hardhat"
   dependencies:
     "@chainlink/contracts": ^0.8.0
+    "@chainlink/contracts-ccip": ^1.2.1
     "@ethersproject/abi": ^5.7.0
     "@ethersproject/providers": ^5.7.1
     "@nomicfoundation/hardhat-chai-matchers": ^2.0.3
