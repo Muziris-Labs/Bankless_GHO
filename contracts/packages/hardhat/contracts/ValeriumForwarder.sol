@@ -259,28 +259,28 @@ contract ValeriumForwarder is EIP712, Nonces {
             }
             else{
                 if(functionSelector == Valerium.executeNative.selector){
-                    (bytes memory proof, bytes32[] memory _inputs, address dest, uint256 value, bytes memory func, , ) = abi.decode(request.data[4:], (bytes, bytes32[], address, uint256, bytes, uint256, uint256));
-                    success = Valerium(payable(request.to)).executeNative(proof, _inputs, dest, value, func, baseFees, expectedFees);
+                    (bytes memory proof, address dest, uint256 value, bytes memory func, , ) = abi.decode(request.data[4:], (bytes, address, uint256, bytes, uint256, uint256));
+                    success = Valerium(payable(request.to)).executeNative(proof, dest, value, func, baseFees, expectedFees);
                 }
                 else if(functionSelector == Valerium.executeBatchNative.selector){
-                    (bytes memory proof, bytes32[] memory _inputs, address[] memory dest, uint256[] memory value, bytes[] memory func, , ) = abi.decode(request.data[4:], (bytes, bytes32[], address[], uint256[], bytes[], uint256, uint256));
-                    success = Valerium(payable(request.to)).executeBatchNative(proof, _inputs, dest, value, func, baseFees, expectedFees);
+                    (bytes memory proof, address[] memory dest, uint256[] memory value, bytes[] memory func, , ) = abi.decode(request.data[4:], (bytes, address[], uint256[], bytes[], uint256, uint256));
+                    success = Valerium(payable(request.to)).executeBatchNative(proof, dest, value, func, baseFees, expectedFees);
                 }
                 else if(functionSelector == Valerium.executeRecoveryNative.selector){
-                    (bytes memory proof, bytes32[] memory _inputs, bytes memory _passkeyInputs, , ) = abi.decode(request.data[4:], (bytes, bytes32[], bytes,uint256, uint256));
-                    success = Valerium(payable(request.to)).executeRecoveryNative(proof, _inputs, _passkeyInputs, baseFees, expectedFees);
+                    (bytes memory proof, bytes memory _passkeyInputs, , ) = abi.decode(request.data[4:], (bytes, bytes,uint256, uint256));
+                    success = Valerium(payable(request.to)).executeRecoveryNative(proof, _passkeyInputs, baseFees, expectedFees);
                 }
                 else if(functionSelector == Valerium.executePayGHO.selector){
-                    (bytes memory proof, bytes32[] memory _inputs, address dest, uint256 value, bytes memory func, , ) = abi.decode(request.data[4:], (bytes, bytes32[], address, uint256, bytes, uint256, uint256));
-                    success = Valerium(payable(request.to)).executePayGHO(proof, _inputs, dest, value, func, baseFees, expectedFees);
+                    (bytes memory proof, address dest, uint256 value, bytes memory func, , ) = abi.decode(request.data[4:], (bytes, address, uint256, bytes, uint256, uint256));
+                    success = Valerium(payable(request.to)).executePayGHO(proof, dest, value, func, baseFees, expectedFees);
                 }
                 else if(functionSelector == Valerium.executeBatchPayGHO.selector){
-                    (bytes memory proof, bytes32[] memory _inputs, address[] memory dest, uint256[] memory value, bytes[] memory func, , ) = abi.decode(request.data[4:], (bytes, bytes32[], address[], uint256[], bytes[], uint256, uint256));
-                    success = Valerium(payable(request.to)).executeBatchPayGHO(proof, _inputs, dest, value, func, baseFees, expectedFees);
+                    (bytes memory proof, address[] memory dest, uint256[] memory value, bytes[] memory func, , ) = abi.decode(request.data[4:], (bytes, address[], uint256[], bytes[], uint256, uint256));
+                    success = Valerium(payable(request.to)).executeBatchPayGHO(proof, dest, value, func, baseFees, expectedFees);
                 }
                 else if(functionSelector == Valerium.executeRecoveryPayGHO.selector){
-                    (bytes memory proof, bytes32[] memory _inputs, bytes memory _passkeyInputs, , ) = abi.decode(request.data[4:], (bytes, bytes32[], bytes,uint256, uint256));
-                    success = Valerium(payable(request.to)).executeRecoveryPayGHO(proof, _inputs, _passkeyInputs, baseFees, expectedFees);
+                    (bytes memory proof, bytes memory _passkeyInputs, , ) = abi.decode(request.data[4:], (bytes, bytes,uint256, uint256));
+                    success = Valerium(payable(request.to)).executeRecoveryPayGHO(proof, _passkeyInputs, baseFees, expectedFees);
                 }
                 else{
                     return false;

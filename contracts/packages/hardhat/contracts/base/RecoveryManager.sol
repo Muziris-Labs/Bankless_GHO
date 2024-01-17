@@ -29,31 +29,16 @@ contract RecoveryManager {
         recoveryVerifier = RecoveryUltraVerifier(_recoveryVerifier);
     }
 
-    function verifyRecovery(bytes calldata proof, bytes32[] memory _inputs) public view returns (bool) {
-        bytes32[32] memory messageInput;
-        bytes32[32] memory pubkeyHashInput;
-
-        for (uint256 i = 0; i < 32; i++) {
-            messageInput[i] = bytes32(uint256(recoveryKeyHash) >> (i * 8));
-        }
-
-        for (uint256 i = 0; i < 32; i++) {
-            pubkeyHashInput[i] = bytes32(uint256(recoveryKeyHash) >> ((i + 32) * 8));
-        }
-
-        bytes32 expectedMessage = Conversion.convertBytes32ArrayToBytes32(messageInput);
-        bytes32 expectedPubkeyHash = Conversion.convertBytes32ArrayToBytes32(pubkeyHashInput);
-
+    function verifyRecovery(bytes calldata proof) public view returns (bool) {
         bytes32 message = getRecoveryNonce();
 
-        require(message == expectedMessage, "Invalid message");
-        require(recoveryKeyHash == expectedPubkeyHash, "Invalid pubkeyHash");
+        bytes32[] memory _inputs = Conversion.convertInputs(message, recoveryKeyHash);
 
         return recoveryVerifier.verify(proof, _inputs);
     }
 
-    function useRecovery(bytes calldata proof, bytes32[] memory _inputs) public returns (bool) {
-        require(verifyRecovery(proof, _inputs), "Invalid recovery");
+    function useRecovery(bytes calldata proof) public returns (bool) {
+        require(verifyRecovery(proof), "Invalid recovery");
         _useRecoveryNonce();
         return true;
     }

@@ -42,34 +42,20 @@ contract PasskeyManager {
         inputs = _passkeyInputs;
     }
 
-    function verifyPasskey(bytes calldata proof, bytes32[] memory _inputs) public view returns (bool) {
-        bytes32[32] memory messageInput;
-        bytes32[32] memory pubkeyHashInput;
-
-        for (uint256 i = 0; i < 32; i++) {
-            messageInput[i] = inputs[i];
-        }
-
-        for (uint256 i = 0; i < 32; i++) {
-            pubkeyHashInput[i] = inputs[i + 32];
-        }
-
-        bytes32 expectedMessage = Conversion.convertBytes32ArrayToBytes32(messageInput);
-        bytes32 expectedPubkeyHash = Conversion.convertBytes32ArrayToBytes32(pubkeyHashInput);
-
+    function verifyPasskey(bytes calldata proof) public view returns (bool) {
+       
         bytes32 message = getMessage();
         (
             bytes32 pubkeyHash,,,,,
         ) = decodeEncodedInputs(inputs);
 
-        require(message == expectedMessage, "Invalid message");
-        require(pubkeyHash == expectedPubkeyHash, "Invalid pubkeyHash");
+        bytes32[] memory _inputs = Conversion.convertInputs(message, pubkeyHash);
 
         return passkeyVerifier.verify(proof, _inputs);
     }
 
-    function usePasskey(bytes calldata proof, bytes32[] memory _inputs) internal returns (bool) {
-        require(verifyPasskey(proof, _inputs), "Invalid passkey");
+    function usePasskey(bytes calldata proof) internal returns (bool) {
+        require(verifyPasskey(proof), "Invalid passkey");
         _usePasskeyNonce();
         return true;
     }

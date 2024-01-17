@@ -46,29 +46,29 @@ contract Valerium is TokenCallbackHandler, Initializable, PasskeyManager, Recove
         _initializeRecoveryManager(_recoveryVerifier, _recoveryKeyHash);
     }
 
-    function execute(bytes calldata proof, bytes32[] memory _inputs, address dest, uint256 value, bytes calldata func) public payable notValeriumForwarder returns (bool) {
-        require(usePasskey(proof, _inputs), "Invalid passkey");
+    function execute(bytes calldata proof, address dest, uint256 value, bytes calldata func) public payable notValeriumForwarder returns (bool) {
+        require(usePasskey(proof), "Invalid passkey");
         _execute(dest, value, func);
         return true;
     }
 
-    function executeBatch(bytes calldata proof, bytes32[] memory _inputs, address[] calldata dest, uint256[] calldata value, bytes[] calldata func) public payable notValeriumForwarder returns (bool) {
-        require(usePasskey(proof, _inputs), "Invalid passkey");
+    function executeBatch(bytes calldata proof, address[] calldata dest, uint256[] calldata value, bytes[] calldata func) public payable notValeriumForwarder returns (bool) {
+        require(usePasskey(proof), "Invalid passkey");
         _executeBatch(dest, value, func);
         return true;
     }
 
-    function executeRecovery(bytes calldata proof, bytes32[] memory _inputs, bytes memory _passkeyInputs) public payable notValeriumForwarder returns (bool) {
-        require(useRecovery(proof, _inputs), "Invalid recovery");
+    function executeRecovery(bytes calldata proof, bytes memory _passkeyInputs) public payable notValeriumForwarder returns (bool) {
+        require(useRecovery(proof), "Invalid recovery");
         changePasskeyInputs(_passkeyInputs);
         return true;
     }
 
-    function executeNative(bytes calldata proof, bytes32[] memory _inputs, address dest, uint256 value, bytes calldata func, uint256 baseFees, uint256 expectedFees) public payable onlyValeriumForwarder returns (bool) {
+    function executeNative(bytes calldata proof, address dest, uint256 value, bytes calldata func, uint256 baseFees, uint256 expectedFees) public payable onlyValeriumForwarder returns (bool) {
         require(address(this).balance >= expectedFees + value, "Not enough fees");
         
         uint256 gas = gasleft();
-        execute(proof, _inputs, dest, value, func);
+        execute(proof, dest, value, func);
         uint256 gasUsed = gas - gasleft();
         uint256 fees = (gasUsed * tx.gasprice) + baseFees;
 
@@ -76,7 +76,7 @@ contract Valerium is TokenCallbackHandler, Initializable, PasskeyManager, Recove
         return true;
     }
 
-    function executeBatchNative(bytes calldata proof, bytes32[] memory _inputs, address[] calldata dest, uint256[] calldata value, bytes[] calldata func, uint256 baseFees, uint256 expectedFees) public payable onlyValeriumForwarder returns (bool) {
+    function executeBatchNative(bytes calldata proof, address[] calldata dest, uint256[] calldata value, bytes[] calldata func, uint256 baseFees, uint256 expectedFees) public payable onlyValeriumForwarder returns (bool) {
         uint256 totalValue = 0;
         for (uint256 i = 0; i < value.length; i++) {
             totalValue += value[i];
@@ -84,7 +84,7 @@ contract Valerium is TokenCallbackHandler, Initializable, PasskeyManager, Recove
         require(address(this).balance >= expectedFees + totalValue, "Not enough fees");
         
         uint256 gas = gasleft();
-        executeBatch(proof, _inputs, dest, value, func);
+        executeBatch(proof, dest, value, func);
         uint256 gasUsed = gas - gasleft();
         uint256 fees = (gasUsed * tx.gasprice) + baseFees;
 
@@ -92,11 +92,11 @@ contract Valerium is TokenCallbackHandler, Initializable, PasskeyManager, Recove
         return true;
     }
 
-    function executeRecoveryNative(bytes calldata proof, bytes32[] memory _inputs, bytes memory _passkeyInputs, uint256 baseFees, uint256 expectedFees) public payable onlyValeriumForwarder returns (bool) {
+    function executeRecoveryNative(bytes calldata proof,  bytes memory _passkeyInputs, uint256 baseFees, uint256 expectedFees) public payable onlyValeriumForwarder returns (bool) {
         require(address(this).balance >= expectedFees, "Not enough fees");
         
         uint256 gas = gasleft();
-        executeRecovery(proof, _inputs, _passkeyInputs);
+        executeRecovery(proof, _passkeyInputs);
         uint256 gasUsed = gas - gasleft();
         uint256 fees = (gasUsed * tx.gasprice) + baseFees;
 
@@ -117,11 +117,11 @@ contract Valerium is TokenCallbackHandler, Initializable, PasskeyManager, Recove
         return feeRatio;
     }
 
-    function executePayGHO(bytes calldata proof, bytes32[] memory _inputs, address dest, uint256 value, bytes calldata func, uint256 baseFees, uint256 expectedFees) public payable onlyValeriumForwarder returns (bool) {
+    function executePayGHO(bytes calldata proof, address dest, uint256 value, bytes calldata func, uint256 baseFees, uint256 expectedFees) public payable onlyValeriumForwarder returns (bool) {
         require(IERC20(GHO_TOKEN).balanceOf(address(this)) >= uint(getGHOAmount(int(expectedFees))), "Not enough fees");
         
         uint256 gas = gasleft();
-        execute(proof, _inputs, dest, value, func);
+        execute(proof, dest, value, func);
         uint256 gasUsed = gas - gasleft();
         uint256 fees = (gasUsed * tx.gasprice) + baseFees;
 
@@ -130,11 +130,11 @@ contract Valerium is TokenCallbackHandler, Initializable, PasskeyManager, Recove
         return true;
     }
 
-    function executeBatchPayGHO(bytes calldata proof, bytes32[] memory _inputs, address[] calldata dest, uint256[] calldata value, bytes[] calldata func, uint256 baseFees, uint256 expectedFees) public payable onlyValeriumForwarder returns (bool) {
+    function executeBatchPayGHO(bytes calldata proof, address[] calldata dest, uint256[] calldata value, bytes[] calldata func, uint256 baseFees, uint256 expectedFees) public payable onlyValeriumForwarder returns (bool) {
         require(IERC20(GHO_TOKEN).balanceOf(address(this)) >= uint(getGHOAmount(int(expectedFees))), "Not enough fees");
         
         uint256 gas = gasleft();
-        executeBatch(proof, _inputs, dest, value, func);
+        executeBatch(proof, dest, value, func);
         uint256 gasUsed = gas - gasleft();
         uint256 fees = (gasUsed * tx.gasprice) + baseFees;
 
@@ -143,11 +143,11 @@ contract Valerium is TokenCallbackHandler, Initializable, PasskeyManager, Recove
         return true;
     }
 
-    function executeRecoveryPayGHO(bytes calldata proof, bytes32[] memory _inputs, bytes memory _passkeyInputs, uint256 baseFees, uint256 expectedFees) public payable onlyValeriumForwarder returns (bool) {
+    function executeRecoveryPayGHO(bytes calldata proof, bytes memory _passkeyInputs, uint256 baseFees, uint256 expectedFees) public payable onlyValeriumForwarder returns (bool) {
         require(IERC20(GHO_TOKEN).balanceOf(address(this)) >= uint(getGHOAmount(int(expectedFees))), "Not enough fees");
         
         uint256 gas = gasleft();
-        executeRecovery(proof, _inputs, _passkeyInputs);
+        executeRecovery(proof, _passkeyInputs);
         uint256 gasUsed = gas - gasleft();
         uint256 fees = (gasUsed * tx.gasprice) + baseFees;
 
