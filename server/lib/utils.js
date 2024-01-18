@@ -85,6 +85,24 @@ const getArray = (hex) => {
   return ethers.utils.arrayify(hex);
 };
 
+async function getSignature(_signature) {
+  const signatureParsed = await derToRS(bufferFromBase64(_signature));
+
+  const signature = ethers.BigNumber.from(
+    bufferToHex(signatureParsed[0]) + bufferToHex(signatureParsed[1]).slice(2)
+  );
+
+  return signature;
+}
+
+function parseUint8ArrayToStrArray(value) {
+  let array = [];
+  for (let i = 0; i < value.length; i++) {
+    array[i] = value[i].toString();
+  }
+  return array;
+}
+
 module.exports = {
   bufferFromBase64,
   derToRS,
@@ -93,4 +111,6 @@ module.exports = {
   getKey,
   getCordinates,
   getArray,
+  getSignature,
+  parseUint8ArrayToStrArray,
 };

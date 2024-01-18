@@ -4,7 +4,10 @@ require("dotenv").config();
 const crypto = require("crypto");
 const ethers = require("ethers");
 const utils = require("../../lib/utils");
-const { acvm } = require("@noir-lang/noir_js");
+const { acvm, Noir } = require("@noir-lang/noir_js");
+const { BarretenbergBackend } = require("@noir-lang/backend_barretenberg");
+const passkeyCircuit = require("../../circuits/passkey_circuit/target/passkey_circuit.json");
+const recoveryCircuit = require("../../circuits/recovery_circuit/target/recovery_circuit.json");
 
 router.post("/passkey/inputs", async (req, res) => {
   const { pubkey, credentialId, authenticatorData, clientData } = req.body;
@@ -75,6 +78,42 @@ router.post("/recovery/inputs", async (req, res) => {
   res.json({
     pub_key_x: pub_key_x,
     recoveryKeyHash: pubkey_x_hex,
+  });
+});
+
+router.post("/passkey/generate", async (req, res) => {
+  const { pubkey, signature, message } = req.body;
+
+  const backend = new BarretenbergBackend(passkeyCircuit);
+  const noir = new Noir(passkeyCircuit, backend);
+
+  const pubKeyCoordinates = await utils.getCordinates(pubkey);
+
+  const pub_key_x = pubKeyCoordinates[0];
+  const pub_key_y = pubKeyCoordinates[1];
+
+  const pub_key_x_array = utils.getArray(pub_key_x);
+  const pub_key_y_array = utils.getArray(pub_key_y);
+
+  const signatureHex = await utils.getSignature(signature);
+  const signatureArray = utils.getArray(signatureHex);
+
+  const messageArray = utils.getArray(message);
+
+  const pubkey_x_hash = acvm.sha256(pub_key_x_array);
+
+  const input = {
+    pub_key_x: Array.from(pub_key_x_array),
+    pub_key_y: Array.from(pub_key_y_array),
+    signature: Array.from(signatureArray),
+    message: Array.from(messageArray),
+    pub_key_x_hash: Array.from(pubkey_x_hash),
+  };
+
+  const proof = await noir.generateFinalProof(input);
+
+  res.json({
+    proof: "0x" + Buffer.from(proof.proof).toString("hex"),
   });
 });
 

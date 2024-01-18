@@ -9,8 +9,8 @@
   "author": "Anoy Roy Chowdhury",
   "license": "MIT",
   "dependencies": {
-    "@noir-lang/backend_barretenberg": "^0.17.0",
-    "@noir-lang/noir_js": "^0.17.0",
+    "@noir-lang/backend_barretenberg": "^0.19.4",
+    "@noir-lang/noir_js": "^0.19.4",
     "axios": "^1.6.5",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
