@@ -252,7 +252,7 @@ contract ValeriumForwarder is EIP712, Nonces {
                 functionSelector := mload(add(transactionData, 32))
             }
 
-            if(request.to == address(valeriumFactory)){
+            if(to == address(valeriumFactory)){
                 assembly {
                     success := call(reqGas, to, 0, add(data, 0x20), mload(data), 0, 0) 
                 }
