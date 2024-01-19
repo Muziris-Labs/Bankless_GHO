@@ -8,7 +8,7 @@ import "../util/Conversion.sol";
 contract PasskeyManager {
     UltraVerifier public passkeyVerifier;
 
-    bytes private inputs;
+    bytes public inputs;
 
     uint256 private passkeyNonce;
 

@@ -29,6 +29,10 @@ contract ValeriumFactory is ValeriumStorage, ERC2771Context, OwnerIsCreator, CCI
 
     IERC20 private s_linkToken;
 
+    address public passkeyVerifier;
+
+    address public recoveryVerifier;
+
     mapping(uint64 => bool) public allowlistedDestinationChains;
 
     mapping(uint64 => bool) public allowlistedSourceChains;
@@ -39,11 +43,15 @@ contract ValeriumFactory is ValeriumStorage, ERC2771Context, OwnerIsCreator, CCI
         address _link, 
         address _trustedForwarder, 
         address _gasTank, 
+        address _passkeyVerifier,
+        address _recoveryVerifier,
         address _ghoToken, 
         address _ghoAggregator, 
         address _ethAggregator) ERC2771Context(_trustedForwarder) CCIPReceiver(_router) {
         accountImplementation = new Valerium(_trustedForwarder, _gasTank, _ghoToken, _ghoAggregator, _ethAggregator);
         s_linkToken = IERC20(_link);
+        passkeyVerifier = _passkeyVerifier;
+        recoveryVerifier = _recoveryVerifier;
     }
 
      modifier onlyTrustedForwarder() {
@@ -86,9 +94,7 @@ contract ValeriumFactory is ValeriumStorage, ERC2771Context, OwnerIsCreator, CCI
         uint64 _destinationChainSelector,
         address _receiver,
         string memory name, 
-        address _passkeyVerifier, 
         bytes memory _passkeyInputs, 
-        address _recoveryVerifier, 
         bytes32 _recoveryKeyHash, 
         uint256 salt
     )
@@ -100,9 +106,7 @@ contract ValeriumFactory is ValeriumStorage, ERC2771Context, OwnerIsCreator, CCI
         Client.EVM2AnyMessage memory evm2AnyMessage = _buildCCIPMessage(
             _receiver,
             name,
-            _passkeyVerifier,
             _passkeyInputs,
-            _recoveryVerifier,
             _recoveryKeyHash,
             salt,
             address(s_linkToken)
@@ -125,9 +129,7 @@ contract ValeriumFactory is ValeriumStorage, ERC2771Context, OwnerIsCreator, CCI
     function _buildCCIPMessage(
         address _receiver,
         string memory name, 
-        address _passkeyVerifier, 
         bytes memory _passkeyInputs, 
-        address _recoveryVerifier, 
         bytes32 _recoveryKeyHash, 
         uint256 salt,
         address _feeTokenAddress
@@ -135,7 +137,7 @@ contract ValeriumFactory is ValeriumStorage, ERC2771Context, OwnerIsCreator, CCI
         return
             Client.EVM2AnyMessage({
                 receiver: abi.encode(_receiver),
-                data: abi.encode(name,_passkeyVerifier,_passkeyInputs, _recoveryVerifier,_recoveryKeyHash, salt),
+                data: abi.encode(name, _passkeyInputs, _recoveryKeyHash, salt),
                 tokenAmounts: new Client.EVMTokenAmount[](0),
                 extraArgs: Client._argsToBytes(
                     Client.EVMExtraArgsV1({gasLimit: 900_000})
@@ -156,33 +158,31 @@ contract ValeriumFactory is ValeriumStorage, ERC2771Context, OwnerIsCreator, CCI
     {
         (
             string memory name, 
-            address _passkeyVerifier, 
             bytes memory _passkeyInputs, 
-            address _recoveryVerifier, 
             bytes32 _recoveryKeyHash, 
             uint256 salt
-        ) = abi.decode(any2EvmMessage.data, (string, address, bytes, address, bytes32, uint256));
+        ) = abi.decode(any2EvmMessage.data, (string,  bytes,  bytes32, uint256));
 
-        Valerium valerium = createAccount(name, _passkeyVerifier, _passkeyInputs, _recoveryVerifier, _recoveryKeyHash, salt);
+        require(ValeriumNameToDetails[name].walletAddress == address(0), "Valerium already exists");
+
+        Valerium valerium = createAccount(name, _passkeyInputs, _recoveryKeyHash, salt);
 
         emit ValeriumCreated(name, address(valerium));
     }
 
     function createAccount(
         string memory name, 
-        address _passkeyVerifier, 
         bytes memory _passkeyInputs, 
-        address _recoveryVerifier, 
         bytes32 _recoveryKeyHash, 
         uint256 salt) public returns (Valerium ret) {
-        address addr = getAddress(_passkeyVerifier, _passkeyInputs, _recoveryVerifier, _recoveryKeyHash, salt);
+        address addr = getAddress(passkeyVerifier, _passkeyInputs, recoveryVerifier, _recoveryKeyHash, salt);
         uint codeSize = addr.code.length;
         if (codeSize > 0) {
             return Valerium(payable(addr));
         }
         ret = Valerium(payable(new ERC1967Proxy{salt : bytes32(salt)}(
                 address(accountImplementation),
-                abi.encodeCall(Valerium.initialize, (_passkeyVerifier, _passkeyInputs, _recoveryVerifier, _recoveryKeyHash))
+                abi.encodeCall(Valerium.initialize, (passkeyVerifier, _passkeyInputs, recoveryVerifier, _recoveryKeyHash))
             )));
         addValerium(name, address(ret));
     }
@@ -191,14 +191,15 @@ contract ValeriumFactory is ValeriumStorage, ERC2771Context, OwnerIsCreator, CCI
         uint64 _destinationChainSelector, 
         address _receiver,
         string memory name, 
-        address _passkeyVerifier, 
-        bytes memory _passkeyInputs, 
-        address _recoveryVerifier, 
-        bytes32 _recoveryKeyHash, 
         uint256 salt) public returns (Valerium ret) {
-    
-        sendMessagePayLINK(_destinationChainSelector, _receiver, name, _passkeyVerifier, _passkeyInputs, _recoveryVerifier, _recoveryKeyHash, salt);
+        require(ValeriumNameToDetails[name].walletAddress != address(0), "Valerium does not exist");
         
+        Valerium valerium = Valerium(payable(ValeriumNameToDetails[name].walletAddress));
+        bytes memory _passkeyInputs = valerium.inputs();
+        bytes32 _recoveryKeyHash = valerium.recoveryKeyHash();
+
+        sendMessagePayLINK(_destinationChainSelector, _receiver, name,  _passkeyInputs, _recoveryKeyHash, salt);
+
         emit ValeriumCreated(name, address(ret));
     }
 

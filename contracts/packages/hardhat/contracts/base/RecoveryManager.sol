@@ -11,7 +11,7 @@ contract RecoveryManager {
 
     RecoveryUltraVerifier public recoveryVerifier;
 
-    bytes32 private recoveryKeyHash;
+    bytes32 public recoveryKeyHash;
 
     uint256 private recoveryNonce;
 
