@@ -1,0 +1,126 @@
+{
+  "address": "0xADcCA523443cf9e9Cfda181872fB20D286C5ebBc",
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "stateMutability": "payable",
+      "type": "fallback"
+    },
+    {
+      "inputs": [],
+      "name": "Owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "changeOwner",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address payable",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdraw",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address payable",
+          "name": "to",
+          "type": "address"
+        }
+      ],
+      "name": "withdrawAll",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "stateMutability": "payable",
+      "type": "receive"
+    }
+  ],
+  "transactionHash": "0x27dd8d458e8545461406aa0e11bc4b09b12e99cefa3e65ae633455960f761400",
+  "receipt": {
+    "to": null,
+    "from": "0xDb1d125C9f7faE45d7CeE470d048670a85270f4D",
+    "contractAddress": "0xADcCA523443cf9e9Cfda181872fB20D286C5ebBc",
+    "transactionIndex": 62,
+    "gasUsed": "299810",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x6f289f12411576e3c416b86894c8fe7a7354477cbca7d8ec6f4672e81767f60d",
+    "transactionHash": "0x27dd8d458e8545461406aa0e11bc4b09b12e99cefa3e65ae633455960f761400",
+    "logs": [],
+    "blockNumber": 5110572,
+    "cumulativeGasUsed": "8437064",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "733ecef615fea8a61acdcfeb24545077",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"inputs\":[],\"name\":\"Owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"changeOwner\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address payable\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"withdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address payable\",\"name\":\"to\",\"type\":\"address\"}],\"name\":\"withdrawAll\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"stateMutability\":\"payable\",\"type\":\"receive\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/ValeriumGasTank.sol\":\"ValeriumGasTank\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"details\":{\"constantOptimizer\":true,\"cse\":true,\"deduplicate\":true,\"inliner\":true,\"jumpdestRemover\":true,\"orderLiterals\":true,\"peephole\":true,\"yul\":true,\"yulDetails\":{\"optimizerSteps\":\"u\",\"stackAllocation\":true}},\"runs\":800},\"remappings\":[],\"viaIR\":true},\"sources\":{\"contracts/ValeriumGasTank.sol\":{\"content\":\"//SPDX-License-Identifier: MIT\\npragma solidity >=0.8.0 <0.9.0;\\n\\ncontract ValeriumGasTank {\\n    address public Owner;\\n\\n    constructor() {\\n        Owner = msg.sender;\\n    }\\n\\n    modifier onlyOwner() {\\n        require(msg.sender == Owner, \\\"Only owner can call this function\\\");\\n        _;\\n    }\\n\\n    function changeOwner(address newOwner) public onlyOwner {\\n        Owner = newOwner;\\n    }\\n\\n    function withdraw(address payable to, uint256 amount) public onlyOwner {\\n        to.transfer(amount);\\n    }\\n\\n    function withdrawAll(address payable to) public onlyOwner {\\n        to.transfer(address(this).balance);\\n    }\\n\\n    receive() external payable {}\\n\\n    fallback() external payable {}\\n}\",\"keccak256\":\"0xc4425ea2bb607f45f32a1aeb49141e21abe58ab7603346a8437eedd69b6c8f87\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x608060405234610023575b610012610095565b6040516104086100a3823961040890f35b61002b600080fd5b61000a565b61004490610047906001600160a01b031682565b90565b6001600160a01b031690565b61004490610030565b61004490610053565b906100756100446100919261005c565b82546001600160a01b0319166001600160a01b03919091161790565b9055565b6100a0336000610065565b56fe60806040526004361015610018575b361561001657005b005b60003560e01c8063a6f9dae114610068578063b4a99a4e1461005f578063f3fef3a3146100565763fa09e6300361000e576100516101e0565b61000e565b506100516101b8565b50610051610130565b506100516100c3565b600080fd5b6001600160a01b031690565b90565b6001600160a01b0381165b0361007157565b905035906100a482610085565b565b906100829160208183031215610097576100be600080fd5b610097565b50346100e6575b6100dd6100d83660046100a6565b61031b565b604051005b0390f35b6100ee600080fd5b6100ca565b60009103126100fe57565b6100a4600080fd5b610082916008021c6001600160a01b031690565b906100829154610106565b61008260008061011a565b5034610167575b6101423660046100f3565b6100e261014d610125565b604051918291826001600160a01b03909116815260200190565b61016f600080fd5b610137565b80610090565b905035906100a482610174565b9190610082906040848203126101ab575b6101a28185610097565b9360200161017a565b6101b3600080fd5b610198565b50346101d3575b6100dd6101cd366004610187565b9061037f565b6101db600080fd5b6101bf565b50346101fa575b6100dd6101f53660046100a6565b6103c9565b610202600080fd5b6101e7565b61008290610076565b6100829054610207565b1561022157565b60405162461bcd60e51b815260206004820152602160248201527f4f6e6c79206f776e65722063616e2063616c6c20746869732066756e6374696f6044820152603760f91b6064820152608490fd5b6100a49061029b336102956102886100766000610210565b916001600160a01b031690565b1461021a565b610310565b610076610082610082926001600160a01b031690565b610082906102a0565b610082906102b6565b906102d861008261030c926102bf565b82547fffffffffffffffffffffffff0000000000000000000000000000000000000000166001600160a01b03919091161790565b9055565b6100a49060006102c8565b6100a490610270565b906100a49161033d336102956102886100766000610210565b61034f565b506040513d6000823e3d90fd5b600080809361035e82946102bf565b828215610376575bf11561036e57565b6100a4610342565b506108fc610366565b906100a491610324565b6100a4906103a1336102956102886100766000610210565b600080806103af81946102bf565b6103b8306102bf565b319082821561037657f11561036e57565b6100a49061038956fea264697066735822122036ce2623fa47a3cdd81c5c3893609f7dc69e12fb31358531aa54422788fd017564736f6c63430008110033",
+  "deployedBytecode": "0x60806040526004361015610018575b361561001657005b005b60003560e01c8063a6f9dae114610068578063b4a99a4e1461005f578063f3fef3a3146100565763fa09e6300361000e576100516101e0565b61000e565b506100516101b8565b50610051610130565b506100516100c3565b600080fd5b6001600160a01b031690565b90565b6001600160a01b0381165b0361007157565b905035906100a482610085565b565b906100829160208183031215610097576100be600080fd5b610097565b50346100e6575b6100dd6100d83660046100a6565b61031b565b604051005b0390f35b6100ee600080fd5b6100ca565b60009103126100fe57565b6100a4600080fd5b610082916008021c6001600160a01b031690565b906100829154610106565b61008260008061011a565b5034610167575b6101423660046100f3565b6100e261014d610125565b604051918291826001600160a01b03909116815260200190565b61016f600080fd5b610137565b80610090565b905035906100a482610174565b9190610082906040848203126101ab575b6101a28185610097565b9360200161017a565b6101b3600080fd5b610198565b50346101d3575b6100dd6101cd366004610187565b9061037f565b6101db600080fd5b6101bf565b50346101fa575b6100dd6101f53660046100a6565b6103c9565b610202600080fd5b6101e7565b61008290610076565b6100829054610207565b1561022157565b60405162461bcd60e51b815260206004820152602160248201527f4f6e6c79206f776e65722063616e2063616c6c20746869732066756e6374696f6044820152603760f91b6064820152608490fd5b6100a49061029b336102956102886100766000610210565b916001600160a01b031690565b1461021a565b610310565b610076610082610082926001600160a01b031690565b610082906102a0565b610082906102b6565b906102d861008261030c926102bf565b82547fffffffffffffffffffffffff0000000000000000000000000000000000000000166001600160a01b03919091161790565b9055565b6100a49060006102c8565b6100a490610270565b906100a49161033d336102956102886100766000610210565b61034f565b506040513d6000823e3d90fd5b600080809361035e82946102bf565b828215610376575bf11561036e57565b6100a4610342565b506108fc610366565b906100a491610324565b6100a4906103a1336102956102886100766000610210565b600080806103af81946102bf565b6103b8306102bf565b319082821561037657f11561036e57565b6100a49061038956fea264697066735822122036ce2623fa47a3cdd81c5c3893609f7dc69e12fb31358531aa54422788fd017564736f6c63430008110033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 7504,
+        "contract": "contracts/ValeriumGasTank.sol:ValeriumGasTank",
+        "label": "Owner",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_address"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      }
+    }
+  }
+}

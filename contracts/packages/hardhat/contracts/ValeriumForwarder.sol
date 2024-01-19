@@ -70,7 +70,7 @@ contract ValeriumForwarder is EIP712, Nonces {
 
     address public owner;
 
-    ValeriumFactory public valeriumFactory;
+    address public valeriumFactory;
 
     modifier onlyOwner() {
         require(msg.sender == owner, "ValeriumForwarder: Only owner can call this function");
@@ -78,7 +78,7 @@ contract ValeriumForwarder is EIP712, Nonces {
     }
 
     function assignFactory (address _valeriumFactory) public onlyOwner {
-        valeriumFactory = ValeriumFactory(_valeriumFactory);
+        valeriumFactory = _valeriumFactory;
     }
 
     /**
@@ -113,7 +113,9 @@ contract ValeriumForwarder is EIP712, Nonces {
     /**
      * @dev See {EIP712-constructor}.
      */
-    constructor(string memory name) EIP712(name, "1") {}
+    constructor(string memory name) EIP712(name, "1") {
+        owner = msg.sender;
+    }
 
     /**
      * @dev Returns `true` if a request is valid for a provided `signature` at the current block timestamp.
@@ -252,7 +254,7 @@ contract ValeriumForwarder is EIP712, Nonces {
                 functionSelector := mload(add(transactionData, 32))
             }
 
-            if(to == address(valeriumFactory)){
+            if(to == valeriumFactory){
                 assembly {
                     success := call(reqGas, to, 0, add(data, 0x20), mload(data), 0, 0) 
                 }

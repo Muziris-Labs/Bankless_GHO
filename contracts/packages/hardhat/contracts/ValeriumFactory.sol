@@ -138,7 +138,7 @@ contract ValeriumFactory is ValeriumStorage, ERC2771Context, OwnerIsCreator, CCI
                 data: abi.encode(name,_passkeyVerifier,_passkeyInputs, _recoveryVerifier,_recoveryKeyHash, salt),
                 tokenAmounts: new Client.EVMTokenAmount[](0),
                 extraArgs: Client._argsToBytes(
-                    Client.EVMExtraArgsV1({gasLimit: 200_000})
+                    Client.EVMExtraArgsV1({gasLimit: 900_000})
                 ),
                 feeToken: _feeTokenAddress
             });
@@ -174,7 +174,7 @@ contract ValeriumFactory is ValeriumStorage, ERC2771Context, OwnerIsCreator, CCI
         bytes memory _passkeyInputs, 
         address _recoveryVerifier, 
         bytes32 _recoveryKeyHash, 
-        uint256 salt) internal returns (Valerium ret) {
+        uint256 salt) public returns (Valerium ret) {
         address addr = getAddress(_passkeyVerifier, _passkeyInputs, _recoveryVerifier, _recoveryKeyHash, salt);
         uint codeSize = addr.code.length;
         if (codeSize > 0) {
@@ -187,23 +187,18 @@ contract ValeriumFactory is ValeriumStorage, ERC2771Context, OwnerIsCreator, CCI
         addValerium(name, address(ret));
     }
 
-    function createSuperAccount(
-        uint64[] memory _destinationChainSelector, 
-        address[] memory _receiver,
+    function createExternalAccount(
+        uint64 _destinationChainSelector, 
+        address _receiver,
         string memory name, 
         address _passkeyVerifier, 
         bytes memory _passkeyInputs, 
         address _recoveryVerifier, 
         bytes32 _recoveryKeyHash, 
-        uint256 salt) onlyTrustedForwarder public returns (Valerium ret) {
-        require(_destinationChainSelector.length == _receiver.length, "ValeriumFactory: destinationChainSelector and receiver length mismatch");
-
-        for (uint i = 0; i < _destinationChainSelector.length; i++) {
-            sendMessagePayLINK(_destinationChainSelector[i], _receiver[i], name, _passkeyVerifier, _passkeyInputs, _recoveryVerifier, _recoveryKeyHash, salt);
-        }
+        uint256 salt) public returns (Valerium ret) {
+    
+        sendMessagePayLINK(_destinationChainSelector, _receiver, name, _passkeyVerifier, _passkeyInputs, _recoveryVerifier, _recoveryKeyHash, salt);
         
-        ret = createAccount(name, _passkeyVerifier, _passkeyInputs, _recoveryVerifier, _recoveryKeyHash, salt);
-
         emit ValeriumCreated(name, address(ret));
     }
 

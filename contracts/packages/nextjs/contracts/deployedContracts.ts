@@ -4,6 +4,4164 @@
  */
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
-const deployedContracts = {} as const;
+const deployedContracts = {
+  31337: {
+    ValeriumFactory: {
+      address: "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_router",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_link",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_trustedForwarder",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_gasTank",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_ghoToken",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_ghoAggregator",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_ethAggregator",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "destinationChainSelector",
+              type: "uint64",
+            },
+          ],
+          name: "DestinationChainNotAllowlisted",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "target",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "FailedToWithdrawEth",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "router",
+              type: "address",
+            },
+          ],
+          name: "InvalidRouter",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "currentBalance",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "calculatedFees",
+              type: "uint256",
+            },
+          ],
+          name: "NotEnoughBalance",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NothingToWithdraw",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "sender",
+              type: "address",
+            },
+          ],
+          name: "SenderNotAllowlisted",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "sourceChainSelector",
+              type: "uint64",
+            },
+          ],
+          name: "SourceChainNotAllowlisted",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferRequested",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "valerium",
+              type: "address",
+            },
+          ],
+          name: "ValeriumCreated",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          name: "ValeriumNameToDetails",
+          outputs: [
+            {
+              internalType: "address",
+              name: "walletAddress",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "isUsed",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "acceptOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "accountImplementation",
+          outputs: [
+            {
+              internalType: "contract Valerium",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "_destinationChainSelector",
+              type: "uint64",
+            },
+            {
+              internalType: "bool",
+              name: "allowed",
+              type: "bool",
+            },
+          ],
+          name: "allowlistDestinationChain",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_sender",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "allowed",
+              type: "bool",
+            },
+          ],
+          name: "allowlistSender",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "_sourceChainSelector",
+              type: "uint64",
+            },
+            {
+              internalType: "bool",
+              name: "allowed",
+              type: "bool",
+            },
+          ],
+          name: "allowlistSourceChain",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "",
+              type: "uint64",
+            },
+          ],
+          name: "allowlistedDestinationChains",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          name: "allowlistedSenders",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "",
+              type: "uint64",
+            },
+          ],
+          name: "allowlistedSourceChains",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "messageId",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint64",
+                  name: "sourceChainSelector",
+                  type: "uint64",
+                },
+                {
+                  internalType: "bytes",
+                  name: "sender",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "token",
+                      type: "address",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "amount",
+                      type: "uint256",
+                    },
+                  ],
+                  internalType: "struct Client.EVMTokenAmount[]",
+                  name: "destTokenAmounts",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct Client.Any2EVMMessage",
+              name: "message",
+              type: "tuple",
+            },
+          ],
+          name: "ccipReceive",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64[]",
+              name: "_destinationChainSelector",
+              type: "uint64[]",
+            },
+            {
+              internalType: "address[]",
+              name: "_receiver",
+              type: "address[]",
+            },
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              internalType: "address[]",
+              name: "_passkeyVerifiers",
+              type: "address[]",
+            },
+            {
+              internalType: "bytes",
+              name: "_passkeyInputs",
+              type: "bytes",
+            },
+            {
+              internalType: "address[]",
+              name: "_recoveryVerifiers",
+              type: "address[]",
+            },
+            {
+              internalType: "bytes32",
+              name: "_recoveryKeyHash",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "salt",
+              type: "uint256",
+            },
+          ],
+          name: "createSuperAccount",
+          outputs: [
+            {
+              internalType: "contract Valerium",
+              name: "ret",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_passkeyVerifier",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "_passkeyInputs",
+              type: "bytes",
+            },
+            {
+              internalType: "address",
+              name: "_recoveryVerifier",
+              type: "address",
+            },
+            {
+              internalType: "bytes32",
+              name: "_recoveryKeyHash",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "salt",
+              type: "uint256",
+            },
+          ],
+          name: "getAddress",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getRouter",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "getValerium",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "walletAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bool",
+                  name: "isUsed",
+                  type: "bool",
+                },
+              ],
+              internalType: "struct ValeriumStorage.ValeriumDetails",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "forwarder",
+              type: "address",
+            },
+          ],
+          name: "isTrustedForwarder",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceId",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        ValeriumNameToDetails: "contracts/ValeriumStorage.sol",
+        getValerium: "contracts/ValeriumStorage.sol",
+        isTrustedForwarder: "@openzeppelin/contracts/metatx/ERC2771Context.sol",
+        acceptOwnership:
+          "@chainlink/contracts-ccip/src/v0.8/shared/access/OwnerIsCreator.sol",
+        owner:
+          "@chainlink/contracts-ccip/src/v0.8/shared/access/OwnerIsCreator.sol",
+        transferOwnership:
+          "@chainlink/contracts-ccip/src/v0.8/shared/access/OwnerIsCreator.sol",
+        ccipReceive:
+          "@chainlink/contracts-ccip/src/v0.8/ccip/applications/CCIPReceiver.sol",
+        getRouter:
+          "@chainlink/contracts-ccip/src/v0.8/ccip/applications/CCIPReceiver.sol",
+        supportsInterface:
+          "@chainlink/contracts-ccip/src/v0.8/ccip/applications/CCIPReceiver.sol",
+      },
+    },
+  },
+  43113: {
+    RecoveryUltraVerifier: {
+      address: "0x2aa4c97688f340C8A2bDE2016b16dEFDC259834D",
+      abi: [
+        {
+          inputs: [],
+          name: "EC_SCALAR_MUL_FAILURE",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "MOD_EXP_FAILURE",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "PROOF_FAILURE",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "expected",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "actual",
+              type: "uint256",
+            },
+          ],
+          name: "PUBLIC_INPUT_COUNT_INVALID",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "PUBLIC_INPUT_GE_P",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "PUBLIC_INPUT_INVALID_BN128_G1_POINT",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "getVerificationKeyHash",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes",
+              name: "_proof",
+              type: "bytes",
+            },
+            {
+              internalType: "bytes32[]",
+              name: "_publicInputs",
+              type: "bytes32[]",
+            },
+          ],
+          name: "verify",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    UltraVerifier: {
+      address: "0xcbd8EF2d15E11fC65793e693d7D11e918fAfa5D6",
+      abi: [
+        {
+          inputs: [],
+          name: "EC_SCALAR_MUL_FAILURE",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "MOD_EXP_FAILURE",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "PROOF_FAILURE",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "expected",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "actual",
+              type: "uint256",
+            },
+          ],
+          name: "PUBLIC_INPUT_COUNT_INVALID",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "PUBLIC_INPUT_GE_P",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "PUBLIC_INPUT_INVALID_BN128_G1_POINT",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "getVerificationKeyHash",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes",
+              name: "_proof",
+              type: "bytes",
+            },
+            {
+              internalType: "bytes32[]",
+              name: "_publicInputs",
+              type: "bytes32[]",
+            },
+          ],
+          name: "verify",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    ValeriumFactory: {
+      address: "0x75a7d9B87391664F816863e28df0c2e63dfb4543",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_router",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_link",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_trustedForwarder",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_gasTank",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_ghoToken",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_ghoAggregator",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_ethAggregator",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "destinationChainSelector",
+              type: "uint64",
+            },
+          ],
+          name: "DestinationChainNotAllowlisted",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "target",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "FailedToWithdrawEth",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "router",
+              type: "address",
+            },
+          ],
+          name: "InvalidRouter",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "currentBalance",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "calculatedFees",
+              type: "uint256",
+            },
+          ],
+          name: "NotEnoughBalance",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NothingToWithdraw",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "sender",
+              type: "address",
+            },
+          ],
+          name: "SenderNotAllowlisted",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "sourceChainSelector",
+              type: "uint64",
+            },
+          ],
+          name: "SourceChainNotAllowlisted",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferRequested",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "valerium",
+              type: "address",
+            },
+          ],
+          name: "ValeriumCreated",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          name: "ValeriumNameToDetails",
+          outputs: [
+            {
+              internalType: "address",
+              name: "walletAddress",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "isUsed",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "acceptOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "accountImplementation",
+          outputs: [
+            {
+              internalType: "contract Valerium",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "_destinationChainSelector",
+              type: "uint64",
+            },
+            {
+              internalType: "bool",
+              name: "allowed",
+              type: "bool",
+            },
+          ],
+          name: "allowlistDestinationChain",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_sender",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "allowed",
+              type: "bool",
+            },
+          ],
+          name: "allowlistSender",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "_sourceChainSelector",
+              type: "uint64",
+            },
+            {
+              internalType: "bool",
+              name: "allowed",
+              type: "bool",
+            },
+          ],
+          name: "allowlistSourceChain",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "",
+              type: "uint64",
+            },
+          ],
+          name: "allowlistedDestinationChains",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          name: "allowlistedSenders",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "",
+              type: "uint64",
+            },
+          ],
+          name: "allowlistedSourceChains",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "messageId",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint64",
+                  name: "sourceChainSelector",
+                  type: "uint64",
+                },
+                {
+                  internalType: "bytes",
+                  name: "sender",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "token",
+                      type: "address",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "amount",
+                      type: "uint256",
+                    },
+                  ],
+                  internalType: "struct Client.EVMTokenAmount[]",
+                  name: "destTokenAmounts",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct Client.Any2EVMMessage",
+              name: "message",
+              type: "tuple",
+            },
+          ],
+          name: "ccipReceive",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              internalType: "address",
+              name: "_passkeyVerifier",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "_passkeyInputs",
+              type: "bytes",
+            },
+            {
+              internalType: "address",
+              name: "_recoveryVerifier",
+              type: "address",
+            },
+            {
+              internalType: "bytes32",
+              name: "_recoveryKeyHash",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "salt",
+              type: "uint256",
+            },
+          ],
+          name: "createAccount",
+          outputs: [
+            {
+              internalType: "contract Valerium",
+              name: "ret",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "_destinationChainSelector",
+              type: "uint64",
+            },
+            {
+              internalType: "address",
+              name: "_receiver",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              internalType: "address",
+              name: "_passkeyVerifier",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "_passkeyInputs",
+              type: "bytes",
+            },
+            {
+              internalType: "address",
+              name: "_recoveryVerifier",
+              type: "address",
+            },
+            {
+              internalType: "bytes32",
+              name: "_recoveryKeyHash",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "salt",
+              type: "uint256",
+            },
+          ],
+          name: "createExternalAccount",
+          outputs: [
+            {
+              internalType: "contract Valerium",
+              name: "ret",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_passkeyVerifier",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "_passkeyInputs",
+              type: "bytes",
+            },
+            {
+              internalType: "address",
+              name: "_recoveryVerifier",
+              type: "address",
+            },
+            {
+              internalType: "bytes32",
+              name: "_recoveryKeyHash",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "salt",
+              type: "uint256",
+            },
+          ],
+          name: "getAddress",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getRouter",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "getValerium",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "walletAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bool",
+                  name: "isUsed",
+                  type: "bool",
+                },
+              ],
+              internalType: "struct ValeriumStorage.ValeriumDetails",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "forwarder",
+              type: "address",
+            },
+          ],
+          name: "isTrustedForwarder",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceId",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        ValeriumNameToDetails: "contracts/ValeriumStorage.sol",
+        getValerium: "contracts/ValeriumStorage.sol",
+        isTrustedForwarder: "@openzeppelin/contracts/metatx/ERC2771Context.sol",
+        acceptOwnership:
+          "@chainlink/contracts-ccip/src/v0.8/shared/access/OwnerIsCreator.sol",
+        owner:
+          "@chainlink/contracts-ccip/src/v0.8/shared/access/OwnerIsCreator.sol",
+        transferOwnership:
+          "@chainlink/contracts-ccip/src/v0.8/shared/access/OwnerIsCreator.sol",
+        ccipReceive:
+          "@chainlink/contracts-ccip/src/v0.8/ccip/applications/CCIPReceiver.sol",
+        getRouter:
+          "@chainlink/contracts-ccip/src/v0.8/ccip/applications/CCIPReceiver.sol",
+        supportsInterface:
+          "@chainlink/contracts-ccip/src/v0.8/ccip/applications/CCIPReceiver.sol",
+      },
+    },
+    ValeriumForwarder: {
+      address: "0x88a0b5C0AACBF567400B29632aA90b81e9a2f01f",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint48",
+              name: "deadline",
+              type: "uint48",
+            },
+          ],
+          name: "ERC2771ForwarderExpiredRequest",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+          ],
+          name: "ERC2771ForwarderInvalidSigner",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "requestedValue",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "msgValue",
+              type: "uint256",
+            },
+          ],
+          name: "ERC2771ForwarderMismatchedValue",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "target",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "forwarder",
+              type: "address",
+            },
+          ],
+          name: "ERC2771UntrustfulTarget",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "currentNonce",
+              type: "uint256",
+            },
+          ],
+          name: "InvalidAccountNonce",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "nonce",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "success",
+              type: "bool",
+            },
+          ],
+          name: "ExecutedForwardRequest",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_valeriumFactory",
+              type: "address",
+            },
+          ],
+          name: "assignFactory",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "from",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "value",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "gas",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint48",
+                  name: "deadline",
+                  type: "uint48",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "signature",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct ValeriumForwarder.ForwardRequestData",
+              name: "request",
+              type: "tuple",
+            },
+            {
+              internalType: "uint256",
+              name: "baseFees",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "expectedFees",
+              type: "uint256",
+            },
+          ],
+          name: "execute",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+          ],
+          name: "nonces",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "valeriumFactory",
+          outputs: [
+            {
+              internalType: "contract ValeriumFactory",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "from",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "value",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "gas",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint48",
+                  name: "deadline",
+                  type: "uint48",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "signature",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct ValeriumForwarder.ForwardRequestData",
+              name: "request",
+              type: "tuple",
+            },
+          ],
+          name: "verify",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    ValeriumGasTank: {
+      address: "0x8487F6630510A00bFACd9Fe701700F193F52C04F",
+      abi: [
+        {
+          inputs: [],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          stateMutability: "payable",
+          type: "fallback",
+        },
+        {
+          inputs: [],
+          name: "Owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "changeOwner",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address payable",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          name: "withdraw",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address payable",
+              name: "to",
+              type: "address",
+            },
+          ],
+          name: "withdrawAll",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          stateMutability: "payable",
+          type: "receive",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+  },
+  421614: {
+    RecoveryUltraVerifier: {
+      address: "0x8487F6630510A00bFACd9Fe701700F193F52C04F",
+      abi: [
+        {
+          inputs: [],
+          name: "EC_SCALAR_MUL_FAILURE",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "MOD_EXP_FAILURE",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "PROOF_FAILURE",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "expected",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "actual",
+              type: "uint256",
+            },
+          ],
+          name: "PUBLIC_INPUT_COUNT_INVALID",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "PUBLIC_INPUT_GE_P",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "PUBLIC_INPUT_INVALID_BN128_G1_POINT",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "getVerificationKeyHash",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes",
+              name: "_proof",
+              type: "bytes",
+            },
+            {
+              internalType: "bytes32[]",
+              name: "_publicInputs",
+              type: "bytes32[]",
+            },
+          ],
+          name: "verify",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    UltraVerifier: {
+      address: "0x2aa4c97688f340C8A2bDE2016b16dEFDC259834D",
+      abi: [
+        {
+          inputs: [],
+          name: "EC_SCALAR_MUL_FAILURE",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "MOD_EXP_FAILURE",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "PROOF_FAILURE",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "expected",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "actual",
+              type: "uint256",
+            },
+          ],
+          name: "PUBLIC_INPUT_COUNT_INVALID",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "PUBLIC_INPUT_GE_P",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "PUBLIC_INPUT_INVALID_BN128_G1_POINT",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "getVerificationKeyHash",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes",
+              name: "_proof",
+              type: "bytes",
+            },
+            {
+              internalType: "bytes32[]",
+              name: "_publicInputs",
+              type: "bytes32[]",
+            },
+          ],
+          name: "verify",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    ValeriumFactory: {
+      address: "0x3581376370890161d4632Dd8506154a3816420ab",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_router",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_link",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_trustedForwarder",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_gasTank",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_ghoToken",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_ghoAggregator",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_ethAggregator",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "destinationChainSelector",
+              type: "uint64",
+            },
+          ],
+          name: "DestinationChainNotAllowlisted",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "target",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "FailedToWithdrawEth",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "router",
+              type: "address",
+            },
+          ],
+          name: "InvalidRouter",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "currentBalance",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "calculatedFees",
+              type: "uint256",
+            },
+          ],
+          name: "NotEnoughBalance",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NothingToWithdraw",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "sender",
+              type: "address",
+            },
+          ],
+          name: "SenderNotAllowlisted",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "sourceChainSelector",
+              type: "uint64",
+            },
+          ],
+          name: "SourceChainNotAllowlisted",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferRequested",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "valerium",
+              type: "address",
+            },
+          ],
+          name: "ValeriumCreated",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          name: "ValeriumNameToDetails",
+          outputs: [
+            {
+              internalType: "address",
+              name: "walletAddress",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "isUsed",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "acceptOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "accountImplementation",
+          outputs: [
+            {
+              internalType: "contract Valerium",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "_destinationChainSelector",
+              type: "uint64",
+            },
+            {
+              internalType: "bool",
+              name: "allowed",
+              type: "bool",
+            },
+          ],
+          name: "allowlistDestinationChain",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_sender",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "allowed",
+              type: "bool",
+            },
+          ],
+          name: "allowlistSender",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "_sourceChainSelector",
+              type: "uint64",
+            },
+            {
+              internalType: "bool",
+              name: "allowed",
+              type: "bool",
+            },
+          ],
+          name: "allowlistSourceChain",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "",
+              type: "uint64",
+            },
+          ],
+          name: "allowlistedDestinationChains",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          name: "allowlistedSenders",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "",
+              type: "uint64",
+            },
+          ],
+          name: "allowlistedSourceChains",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "messageId",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint64",
+                  name: "sourceChainSelector",
+                  type: "uint64",
+                },
+                {
+                  internalType: "bytes",
+                  name: "sender",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "token",
+                      type: "address",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "amount",
+                      type: "uint256",
+                    },
+                  ],
+                  internalType: "struct Client.EVMTokenAmount[]",
+                  name: "destTokenAmounts",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct Client.Any2EVMMessage",
+              name: "message",
+              type: "tuple",
+            },
+          ],
+          name: "ccipReceive",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64[]",
+              name: "_destinationChainSelector",
+              type: "uint64[]",
+            },
+            {
+              internalType: "address[]",
+              name: "_receiver",
+              type: "address[]",
+            },
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              internalType: "address[]",
+              name: "_passkeyVerifiers",
+              type: "address[]",
+            },
+            {
+              internalType: "bytes",
+              name: "_passkeyInputs",
+              type: "bytes",
+            },
+            {
+              internalType: "address[]",
+              name: "_recoveryVerifiers",
+              type: "address[]",
+            },
+            {
+              internalType: "bytes32",
+              name: "_recoveryKeyHash",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "salt",
+              type: "uint256",
+            },
+          ],
+          name: "createSuperAccount",
+          outputs: [
+            {
+              internalType: "contract Valerium",
+              name: "ret",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_passkeyVerifier",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "_passkeyInputs",
+              type: "bytes",
+            },
+            {
+              internalType: "address",
+              name: "_recoveryVerifier",
+              type: "address",
+            },
+            {
+              internalType: "bytes32",
+              name: "_recoveryKeyHash",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "salt",
+              type: "uint256",
+            },
+          ],
+          name: "getAddress",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getRouter",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "getValerium",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "walletAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bool",
+                  name: "isUsed",
+                  type: "bool",
+                },
+              ],
+              internalType: "struct ValeriumStorage.ValeriumDetails",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "forwarder",
+              type: "address",
+            },
+          ],
+          name: "isTrustedForwarder",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceId",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        ValeriumNameToDetails: "contracts/ValeriumStorage.sol",
+        getValerium: "contracts/ValeriumStorage.sol",
+        isTrustedForwarder: "@openzeppelin/contracts/metatx/ERC2771Context.sol",
+        acceptOwnership:
+          "@chainlink/contracts-ccip/src/v0.8/shared/access/OwnerIsCreator.sol",
+        owner:
+          "@chainlink/contracts-ccip/src/v0.8/shared/access/OwnerIsCreator.sol",
+        transferOwnership:
+          "@chainlink/contracts-ccip/src/v0.8/shared/access/OwnerIsCreator.sol",
+        ccipReceive:
+          "@chainlink/contracts-ccip/src/v0.8/ccip/applications/CCIPReceiver.sol",
+        getRouter:
+          "@chainlink/contracts-ccip/src/v0.8/ccip/applications/CCIPReceiver.sol",
+        supportsInterface:
+          "@chainlink/contracts-ccip/src/v0.8/ccip/applications/CCIPReceiver.sol",
+      },
+    },
+    ValeriumForwarder: {
+      address: "0x7cd6d30E2F98eA3804CAE2b60C1E9fEF875625e1",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint48",
+              name: "deadline",
+              type: "uint48",
+            },
+          ],
+          name: "ERC2771ForwarderExpiredRequest",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+          ],
+          name: "ERC2771ForwarderInvalidSigner",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "requestedValue",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "msgValue",
+              type: "uint256",
+            },
+          ],
+          name: "ERC2771ForwarderMismatchedValue",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "target",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "forwarder",
+              type: "address",
+            },
+          ],
+          name: "ERC2771UntrustfulTarget",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "currentNonce",
+              type: "uint256",
+            },
+          ],
+          name: "InvalidAccountNonce",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "nonce",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "success",
+              type: "bool",
+            },
+          ],
+          name: "ExecutedForwardRequest",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_valeriumFactory",
+              type: "address",
+            },
+          ],
+          name: "assignFactory",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "from",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "value",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "gas",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint48",
+                  name: "deadline",
+                  type: "uint48",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "signature",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct ValeriumForwarder.ForwardRequestData",
+              name: "request",
+              type: "tuple",
+            },
+            {
+              internalType: "uint256",
+              name: "baseFees",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "expectedFees",
+              type: "uint256",
+            },
+          ],
+          name: "execute",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+          ],
+          name: "nonces",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "valeriumFactory",
+          outputs: [
+            {
+              internalType: "contract ValeriumFactory",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "from",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "value",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "gas",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint48",
+                  name: "deadline",
+                  type: "uint48",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "signature",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct ValeriumForwarder.ForwardRequestData",
+              name: "request",
+              type: "tuple",
+            },
+          ],
+          name: "verify",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    ValeriumGasTank: {
+      address: "0x2EF41EC23021bD5aBa53C6599D763e89A897Acad",
+      abi: [
+        {
+          inputs: [],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          stateMutability: "payable",
+          type: "fallback",
+        },
+        {
+          inputs: [],
+          name: "Owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "changeOwner",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address payable",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          name: "withdraw",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address payable",
+              name: "to",
+              type: "address",
+            },
+          ],
+          name: "withdrawAll",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          stateMutability: "payable",
+          type: "receive",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+  },
+  11155111: {
+    RecoveryUltraVerifier: {
+      address: "0x2020B832f19BCF6aC3ae8073Fe1C8e06140c2306",
+      abi: [
+        {
+          inputs: [],
+          name: "EC_SCALAR_MUL_FAILURE",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "MOD_EXP_FAILURE",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "PROOF_FAILURE",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "expected",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "actual",
+              type: "uint256",
+            },
+          ],
+          name: "PUBLIC_INPUT_COUNT_INVALID",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "PUBLIC_INPUT_GE_P",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "PUBLIC_INPUT_INVALID_BN128_G1_POINT",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "getVerificationKeyHash",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes",
+              name: "_proof",
+              type: "bytes",
+            },
+            {
+              internalType: "bytes32[]",
+              name: "_publicInputs",
+              type: "bytes32[]",
+            },
+          ],
+          name: "verify",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    UltraVerifier: {
+      address: "0xF768fA09b378200811eE0CFe6DeD7B2E830202E5",
+      abi: [
+        {
+          inputs: [],
+          name: "EC_SCALAR_MUL_FAILURE",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "MOD_EXP_FAILURE",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "PROOF_FAILURE",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "expected",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "actual",
+              type: "uint256",
+            },
+          ],
+          name: "PUBLIC_INPUT_COUNT_INVALID",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "PUBLIC_INPUT_GE_P",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "PUBLIC_INPUT_INVALID_BN128_G1_POINT",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "getVerificationKeyHash",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes",
+              name: "_proof",
+              type: "bytes",
+            },
+            {
+              internalType: "bytes32[]",
+              name: "_publicInputs",
+              type: "bytes32[]",
+            },
+          ],
+          name: "verify",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    ValeriumFactory: {
+      address: "0x75a7d9B87391664F816863e28df0c2e63dfb4543",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_router",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_link",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_trustedForwarder",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_gasTank",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_ghoToken",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_ghoAggregator",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_ethAggregator",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "destinationChainSelector",
+              type: "uint64",
+            },
+          ],
+          name: "DestinationChainNotAllowlisted",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "target",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "FailedToWithdrawEth",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "router",
+              type: "address",
+            },
+          ],
+          name: "InvalidRouter",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "currentBalance",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "calculatedFees",
+              type: "uint256",
+            },
+          ],
+          name: "NotEnoughBalance",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NothingToWithdraw",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "sender",
+              type: "address",
+            },
+          ],
+          name: "SenderNotAllowlisted",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "sourceChainSelector",
+              type: "uint64",
+            },
+          ],
+          name: "SourceChainNotAllowlisted",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferRequested",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "valerium",
+              type: "address",
+            },
+          ],
+          name: "ValeriumCreated",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          name: "ValeriumNameToDetails",
+          outputs: [
+            {
+              internalType: "address",
+              name: "walletAddress",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "isUsed",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "acceptOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "accountImplementation",
+          outputs: [
+            {
+              internalType: "contract Valerium",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "_destinationChainSelector",
+              type: "uint64",
+            },
+            {
+              internalType: "bool",
+              name: "allowed",
+              type: "bool",
+            },
+          ],
+          name: "allowlistDestinationChain",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_sender",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "allowed",
+              type: "bool",
+            },
+          ],
+          name: "allowlistSender",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "_sourceChainSelector",
+              type: "uint64",
+            },
+            {
+              internalType: "bool",
+              name: "allowed",
+              type: "bool",
+            },
+          ],
+          name: "allowlistSourceChain",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "",
+              type: "uint64",
+            },
+          ],
+          name: "allowlistedDestinationChains",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          name: "allowlistedSenders",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "",
+              type: "uint64",
+            },
+          ],
+          name: "allowlistedSourceChains",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "messageId",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint64",
+                  name: "sourceChainSelector",
+                  type: "uint64",
+                },
+                {
+                  internalType: "bytes",
+                  name: "sender",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "token",
+                      type: "address",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "amount",
+                      type: "uint256",
+                    },
+                  ],
+                  internalType: "struct Client.EVMTokenAmount[]",
+                  name: "destTokenAmounts",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct Client.Any2EVMMessage",
+              name: "message",
+              type: "tuple",
+            },
+          ],
+          name: "ccipReceive",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              internalType: "address",
+              name: "_passkeyVerifier",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "_passkeyInputs",
+              type: "bytes",
+            },
+            {
+              internalType: "address",
+              name: "_recoveryVerifier",
+              type: "address",
+            },
+            {
+              internalType: "bytes32",
+              name: "_recoveryKeyHash",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "salt",
+              type: "uint256",
+            },
+          ],
+          name: "createAccount",
+          outputs: [
+            {
+              internalType: "contract Valerium",
+              name: "ret",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "_destinationChainSelector",
+              type: "uint64",
+            },
+            {
+              internalType: "address",
+              name: "_receiver",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              internalType: "address",
+              name: "_passkeyVerifier",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "_passkeyInputs",
+              type: "bytes",
+            },
+            {
+              internalType: "address",
+              name: "_recoveryVerifier",
+              type: "address",
+            },
+            {
+              internalType: "bytes32",
+              name: "_recoveryKeyHash",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "salt",
+              type: "uint256",
+            },
+          ],
+          name: "createExternalAccount",
+          outputs: [
+            {
+              internalType: "contract Valerium",
+              name: "ret",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_passkeyVerifier",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "_passkeyInputs",
+              type: "bytes",
+            },
+            {
+              internalType: "address",
+              name: "_recoveryVerifier",
+              type: "address",
+            },
+            {
+              internalType: "bytes32",
+              name: "_recoveryKeyHash",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "salt",
+              type: "uint256",
+            },
+          ],
+          name: "getAddress",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getRouter",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "getValerium",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "walletAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bool",
+                  name: "isUsed",
+                  type: "bool",
+                },
+              ],
+              internalType: "struct ValeriumStorage.ValeriumDetails",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "forwarder",
+              type: "address",
+            },
+          ],
+          name: "isTrustedForwarder",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceId",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        ValeriumNameToDetails: "contracts/ValeriumStorage.sol",
+        getValerium: "contracts/ValeriumStorage.sol",
+        isTrustedForwarder: "@openzeppelin/contracts/metatx/ERC2771Context.sol",
+        acceptOwnership:
+          "@chainlink/contracts-ccip/src/v0.8/shared/access/OwnerIsCreator.sol",
+        owner:
+          "@chainlink/contracts-ccip/src/v0.8/shared/access/OwnerIsCreator.sol",
+        transferOwnership:
+          "@chainlink/contracts-ccip/src/v0.8/shared/access/OwnerIsCreator.sol",
+        ccipReceive:
+          "@chainlink/contracts-ccip/src/v0.8/ccip/applications/CCIPReceiver.sol",
+        getRouter:
+          "@chainlink/contracts-ccip/src/v0.8/ccip/applications/CCIPReceiver.sol",
+        supportsInterface:
+          "@chainlink/contracts-ccip/src/v0.8/ccip/applications/CCIPReceiver.sol",
+      },
+    },
+    ValeriumForwarder: {
+      address: "0x7695E854Dd22c4E609d2C62B460293599aC3757A",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint48",
+              name: "deadline",
+              type: "uint48",
+            },
+          ],
+          name: "ERC2771ForwarderExpiredRequest",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+          ],
+          name: "ERC2771ForwarderInvalidSigner",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "requestedValue",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "msgValue",
+              type: "uint256",
+            },
+          ],
+          name: "ERC2771ForwarderMismatchedValue",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "target",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "forwarder",
+              type: "address",
+            },
+          ],
+          name: "ERC2771UntrustfulTarget",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "currentNonce",
+              type: "uint256",
+            },
+          ],
+          name: "InvalidAccountNonce",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "nonce",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "success",
+              type: "bool",
+            },
+          ],
+          name: "ExecutedForwardRequest",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_valeriumFactory",
+              type: "address",
+            },
+          ],
+          name: "assignFactory",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "from",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "value",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "gas",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint48",
+                  name: "deadline",
+                  type: "uint48",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "signature",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct ValeriumForwarder.ForwardRequestData",
+              name: "request",
+              type: "tuple",
+            },
+            {
+              internalType: "uint256",
+              name: "baseFees",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "expectedFees",
+              type: "uint256",
+            },
+          ],
+          name: "execute",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+          ],
+          name: "nonces",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "valeriumFactory",
+          outputs: [
+            {
+              internalType: "contract ValeriumFactory",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "from",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "value",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "gas",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint48",
+                  name: "deadline",
+                  type: "uint48",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "signature",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct ValeriumForwarder.ForwardRequestData",
+              name: "request",
+              type: "tuple",
+            },
+          ],
+          name: "verify",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    ValeriumGasTank: {
+      address: "0xADcCA523443cf9e9Cfda181872fB20D286C5ebBc",
+      abi: [
+        {
+          inputs: [],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          stateMutability: "payable",
+          type: "fallback",
+        },
+        {
+          inputs: [],
+          name: "Owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "changeOwner",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address payable",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          name: "withdraw",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address payable",
+              name: "to",
+              type: "address",
+            },
+          ],
+          name: "withdrawAll",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          stateMutability: "payable",
+          type: "receive",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+  },
+} as const;
 
 export default deployedContracts satisfies GenericContractsDeclaration;

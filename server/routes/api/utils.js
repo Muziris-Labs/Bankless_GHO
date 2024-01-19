@@ -159,8 +159,6 @@ router.post("/recovery/generate", async (req, res) => {
     pub_key_x_hash: Array.from(pubkey_x_hash),
   };
 
-  console.log(input);
-
   const proof = await noir.generateFinalProof(input);
 
   res.json({
