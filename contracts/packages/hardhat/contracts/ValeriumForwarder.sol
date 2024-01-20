@@ -7,7 +7,6 @@ import "@openzeppelin/contracts/metatx/ERC2771Context.sol";
 import "@openzeppelin/contracts/utils/cryptography/EIP712.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
-import "./ValeriumFactory.sol";
 import "./Valerium.sol";
 
 abstract contract Nonces {

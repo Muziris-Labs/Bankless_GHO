@@ -791,7 +791,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     ValeriumFactory: {
-      address: "0x75a7d9B87391664F816863e28df0c2e63dfb4543",
+      address: "0x434Fa431E2759393c7CDF01C633DC3d3775d0Fb1",
       abi: [
         {
           inputs: [
@@ -813,6 +813,16 @@ const deployedContracts = {
             {
               internalType: "address",
               name: "_gasTank",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_passkeyVerifier",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_recoveryVerifier",
               type: "address",
             },
             {
@@ -1192,19 +1202,9 @@ const deployedContracts = {
               type: "string",
             },
             {
-              internalType: "address",
-              name: "_passkeyVerifier",
-              type: "address",
-            },
-            {
               internalType: "bytes",
               name: "_passkeyInputs",
               type: "bytes",
-            },
-            {
-              internalType: "address",
-              name: "_recoveryVerifier",
-              type: "address",
             },
             {
               internalType: "bytes32",
@@ -1244,26 +1244,6 @@ const deployedContracts = {
               internalType: "string",
               name: "name",
               type: "string",
-            },
-            {
-              internalType: "address",
-              name: "_passkeyVerifier",
-              type: "address",
-            },
-            {
-              internalType: "bytes",
-              name: "_passkeyInputs",
-              type: "bytes",
-            },
-            {
-              internalType: "address",
-              name: "_recoveryVerifier",
-              type: "address",
-            },
-            {
-              internalType: "bytes32",
-              name: "_recoveryKeyHash",
-              type: "bytes32",
             },
             {
               internalType: "uint256",
@@ -1398,6 +1378,32 @@ const deployedContracts = {
           type: "function",
         },
         {
+          inputs: [],
+          name: "passkeyVerifier",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "recoveryVerifier",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
           inputs: [
             {
               internalType: "bytes4",
@@ -1449,7 +1455,7 @@ const deployedContracts = {
       },
     },
     ValeriumForwarder: {
-      address: "0x88a0b5C0AACBF567400B29632aA90b81e9a2f01f",
+      address: "0x28327d4cDB91735e45558d2BF88024e90f417c2e",
       abi: [
         {
           inputs: [
@@ -1672,7 +1678,7 @@ const deployedContracts = {
           name: "valeriumFactory",
           outputs: [
             {
-              internalType: "contract ValeriumFactory",
+              internalType: "address",
               name: "",
               type: "address",
             },
@@ -1986,7 +1992,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     ValeriumFactory: {
-      address: "0x3581376370890161d4632Dd8506154a3816420ab",
+      address: "0x14b178b6e888044C84CE4bda3311c0D1D4d066d9",
       abi: [
         {
           inputs: [
@@ -2008,6 +2014,16 @@ const deployedContracts = {
             {
               internalType: "address",
               name: "_gasTank",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_passkeyVerifier",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_recoveryVerifier",
               type: "address",
             },
             {
@@ -2382,34 +2398,14 @@ const deployedContracts = {
         {
           inputs: [
             {
-              internalType: "uint64[]",
-              name: "_destinationChainSelector",
-              type: "uint64[]",
-            },
-            {
-              internalType: "address[]",
-              name: "_receiver",
-              type: "address[]",
-            },
-            {
               internalType: "string",
               name: "name",
               type: "string",
             },
             {
-              internalType: "address[]",
-              name: "_passkeyVerifiers",
-              type: "address[]",
-            },
-            {
               internalType: "bytes",
               name: "_passkeyInputs",
               type: "bytes",
-            },
-            {
-              internalType: "address[]",
-              name: "_recoveryVerifiers",
-              type: "address[]",
             },
             {
               internalType: "bytes32",
@@ -2422,7 +2418,41 @@ const deployedContracts = {
               type: "uint256",
             },
           ],
-          name: "createSuperAccount",
+          name: "createAccount",
+          outputs: [
+            {
+              internalType: "contract Valerium",
+              name: "ret",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint64",
+              name: "_destinationChainSelector",
+              type: "uint64",
+            },
+            {
+              internalType: "address",
+              name: "_receiver",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              internalType: "uint256",
+              name: "salt",
+              type: "uint256",
+            },
+          ],
+          name: "createExternalAccount",
           outputs: [
             {
               internalType: "contract Valerium",
@@ -2549,6 +2579,32 @@ const deployedContracts = {
           type: "function",
         },
         {
+          inputs: [],
+          name: "passkeyVerifier",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "recoveryVerifier",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
           inputs: [
             {
               internalType: "bytes4",
@@ -2600,7 +2656,7 @@ const deployedContracts = {
       },
     },
     ValeriumForwarder: {
-      address: "0x7cd6d30E2F98eA3804CAE2b60C1E9fEF875625e1",
+      address: "0x75a7d9B87391664F816863e28df0c2e63dfb4543",
       abi: [
         {
           inputs: [
@@ -2823,7 +2879,7 @@ const deployedContracts = {
           name: "valeriumFactory",
           outputs: [
             {
-              internalType: "contract ValeriumFactory",
+              internalType: "address",
               name: "",
               type: "address",
             },
@@ -3137,7 +3193,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     ValeriumFactory: {
-      address: "0x75a7d9B87391664F816863e28df0c2e63dfb4543",
+      address: "0xbE4db373E362a79e096Daa80B2490EeC86EA1Cb8",
       abi: [
         {
           inputs: [
@@ -3159,6 +3215,16 @@ const deployedContracts = {
             {
               internalType: "address",
               name: "_gasTank",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_passkeyVerifier",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_recoveryVerifier",
               type: "address",
             },
             {
@@ -3538,19 +3604,9 @@ const deployedContracts = {
               type: "string",
             },
             {
-              internalType: "address",
-              name: "_passkeyVerifier",
-              type: "address",
-            },
-            {
               internalType: "bytes",
               name: "_passkeyInputs",
               type: "bytes",
-            },
-            {
-              internalType: "address",
-              name: "_recoveryVerifier",
-              type: "address",
             },
             {
               internalType: "bytes32",
@@ -3590,26 +3646,6 @@ const deployedContracts = {
               internalType: "string",
               name: "name",
               type: "string",
-            },
-            {
-              internalType: "address",
-              name: "_passkeyVerifier",
-              type: "address",
-            },
-            {
-              internalType: "bytes",
-              name: "_passkeyInputs",
-              type: "bytes",
-            },
-            {
-              internalType: "address",
-              name: "_recoveryVerifier",
-              type: "address",
-            },
-            {
-              internalType: "bytes32",
-              name: "_recoveryKeyHash",
-              type: "bytes32",
             },
             {
               internalType: "uint256",
@@ -3744,6 +3780,32 @@ const deployedContracts = {
           type: "function",
         },
         {
+          inputs: [],
+          name: "passkeyVerifier",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "recoveryVerifier",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
           inputs: [
             {
               internalType: "bytes4",
@@ -3795,7 +3857,7 @@ const deployedContracts = {
       },
     },
     ValeriumForwarder: {
-      address: "0x7695E854Dd22c4E609d2C62B460293599aC3757A",
+      address: "0x3e4a6B356475BfA8fAC5AE604c3356D8c4b13D3d",
       abi: [
         {
           inputs: [
@@ -4018,7 +4080,7 @@ const deployedContracts = {
           name: "valeriumFactory",
           outputs: [
             {
-              internalType: "contract ValeriumFactory",
+              internalType: "address",
               name: "",
               type: "address",
             },
