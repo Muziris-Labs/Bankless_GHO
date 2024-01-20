@@ -11,6 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/utils", require("./routes/api/utils"));
+app.use("/api/relay", require("./routes/api/relay"));
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
