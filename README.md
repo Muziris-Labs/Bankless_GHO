@@ -12,6 +12,17 @@
 
 Unlike traditional wallets with a defined owner, Bankless Wallet operates on the principle that ownership is established through possession of a valid zero-knowledge proof (zk-proof). This ensures a high level of privacy and security, as the identity of the wallet owner remains confidential.
 
+> [!TIP]  
+> Bankless Wallet is an On-Chain Non-custodial Wallet
+
+### Multichain Wallet Deployment using ChainLink CCIP
+
+![Factory](https://github.com/Muziris-Labs/Valerium_GHO/assets/38689344/f1d61da5-9d39-4c60-8b02-78f56fc66ff9)
+
+### Gas Payment Using GHO & ZK-Authentication
+
+![erc2771](https://github.com/Muziris-Labs/Valerium_GHO/assets/38689344/ef7204f9-5105-4c61-84d4-1ee4a797792d)
+
 ## Implementation
 
 - Ethereum Sepolia
