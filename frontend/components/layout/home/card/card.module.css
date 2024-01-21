@@ -1,0 +1,12 @@
+.card {
+  background: linear-gradient(
+    110.28deg,
+    rgba(255, 255, 255, 0.36) 0.2%,
+    rgba(217, 217, 217, 0.12) 101.11%
+  );
+  box-shadow: 11.8642px 11.8642px 17.5519px rgba(0, 0, 0, 0.05);
+}
+
+.card:hover {
+  transform: perspective(2000px) rotateY(0deg);
+}
